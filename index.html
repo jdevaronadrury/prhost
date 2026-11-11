@@ -613,7 +613,6 @@ nav button[hidden]{display:none}
     <section class="view" id="v-ctl">
       <div class="vhead"><h2>Control de equipos</h2><span class="sub" id="ctlSub">Neveras, aires y calentador según las reservas</span></div>
       <div class="tools ctl-bar">
-        <select id="ctlWho" class="btn" aria-label="Quién eres"><option value="">¿Quién eres?</option><option>José</option><option>Papá</option><option>Julio</option></select>
         <button class="btn" id="ctlRef">Actualizar</button>
         <button class="btn" id="ctlPause">Pausar automático</button>
       </div>
@@ -1124,14 +1123,13 @@ let CTL=null, CTL_BUSY=false;
 const CTL_PISO={'2':'Las Arcadas · 2do piso','3':'Vista Bahía · 3er piso','agua':'Agua del edificio · 2do y 3er piso'};
 function ctlCfg(){ return BUNDLE&&BUNDLE.control&&BUNDLE.control.url&&BUNDLE.control.token?BUNDLE.control:null; }
 function ctlMsg(t,err){ const m=document.getElementById('ctlMsg'); m.textContent=t||''; m.className='ctl-msg'+(err?' err':''); }
-function ctlWho(){ try{ return localStorage.getItem('prh_who')||''; }catch(e){ return ''; } }
 function ctlFmt(s){ return new Date(s).toLocaleString('es-PR',{weekday:'short',day:'numeric',month:'short',hour:'numeric',minute:'2-digit'}); }
 async function ctlApi(path,body){
   const c=ctlCfg(); if(!c) throw Error('el control no está configurado');
   const ctrl=new AbortController(); const to=setTimeout(()=>ctrl.abort(),180000);
   try{
     const r=await fetch(c.url+path,{method:body?'POST':'GET',signal:ctrl.signal,cache:'no-store',
-      headers:Object.assign({'Authorization':'Bearer '+c.token,'X-Quien':encodeURIComponent(ctlWho()||'sin nombre')},body?{'Content-Type':'application/json'}:{}),
+      headers:Object.assign({'Authorization':'Bearer '+c.token},body?{'Content-Type':'application/json'}:{}),
       body:body?JSON.stringify(body):undefined});
     const j=await r.json().catch(()=>({})); if(!r.ok) throw Error(j.error||('error '+r.status)); return j;
   }catch(e){ if(e.name==='AbortError') throw Error('La Bestia tardó demasiado'); if(e instanceof TypeError) throw Error('no se pudo conectar con La Bestia'); throw e; }
@@ -1171,7 +1169,6 @@ async function ctlAct(k,on,b){
 }
 function ctlWire(){
   const on=!!ctlCfg(); document.getElementById('navCtl').hidden=!on; if(!on) return;
-  const w=document.getElementById('ctlWho'); w.value=ctlWho(); w.onchange=()=>{ try{ localStorage.setItem('prh_who',w.value); }catch(e){} };
   document.getElementById('ctlRef').onclick=()=>ctlLoad(true);
   document.getElementById('ctlPause').onclick=async()=>{ if(!CTL) return; const v=!CTL.pausa;
     if(!confirm(v?'¿Pausar la automatización? No prenderá ni apagará nada hasta que la reanudes.':'¿Reanudar la automatización?')) return;
