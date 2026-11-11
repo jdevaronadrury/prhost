@@ -312,6 +312,148 @@ tr:hover td{background:var(--soft)}
 .note-row{margin-top:10px;padding:8px 10px;border-radius:var(--r-md);background:color-mix(in srgb,var(--amber) 12%,transparent);font-size:13px}
 
 /* ---------- responsive ---------- */
+/* ===== Propiedades ===== */
+[hidden]{display:none!important}
+.plist{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
+.pcard{all:unset;cursor:pointer;display:flex;flex-direction:column;justify-content:flex-start;border-radius:var(--r-lg);background:var(--panel);border:1px solid var(--line);overflow:hidden;transition:transform .25s ease,box-shadow .25s ease}
+.pcard:hover{transform:translateY(-3px);box-shadow:0 14px 30px -18px rgba(31,78,95,.5)}
+.pcard:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.pimg{position:relative;aspect-ratio:4/3;background:var(--soft)}
+.pimg img{width:100%;height:100%;object-fit:cover;display:block}
+.pfl{position:absolute;left:10px;top:10px;background:rgba(255,255,255,.92);color:#1d1d1f;font-size:12px;font-weight:600;padding:4px 9px;border-radius:999px}
+.pbody{padding:12px 14px 14px}
+.ptop{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.ptop b{font-size:16px}
+.prate{font-size:13px;font-weight:600;white-space:nowrap}
+.prate.new{color:var(--muted);font-weight:500}
+.psub{font-size:13px;color:var(--muted);margin-top:3px}
+.pp{max-width:1120px;margin:0 auto}
+.pp-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.pp-top .back{border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:7px 14px;cursor:pointer;font:inherit;color:var(--ink)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--panel)}
+.seg button{border:0;background:transparent;border-radius:999px;padding:6px 14px;cursor:pointer;font:inherit;font-weight:600;color:var(--muted)}
+.seg button.on{background:var(--ink);color:var(--bg)}
+.seg button:disabled{opacity:.35;cursor:not-allowed}
+.pp-top .ext{margin-left:auto;font-size:14px;color:var(--accent);font-weight:600;text-decoration:none}
+.pp-title{font-family:var(--display);font-size:clamp(24px,3vw,30px);font-weight:650;letter-spacing:-.01em;margin:0 0 6px}
+.pp-meta{font-size:14px;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-bottom:16px}
+.pp-meta b{font-weight:650}
+.gfav{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:12px;font-weight:600}
+.pp-gal{position:relative;display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:1fr 1fr;gap:8px;height:clamp(260px,42vw,440px);border-radius:16px;overflow:hidden}
+.pp-gal>button[data-ph]{all:unset;cursor:zoom-in;position:relative;overflow:hidden;background:var(--soft)}
+.pp-gal>button[data-ph]:first-child{grid-row:1/3}
+.pp-gal img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease,filter .3s}
+.pp-gal>button[data-ph]:hover img{transform:scale(1.03);filter:brightness(.92)}
+.pp-all{z-index:2;position:absolute;right:14px;bottom:14px;background:#fff;color:#1d1d1f;border:1px solid #1d1d1f;border-radius:8px;padding:7px 12px;font:600 13px var(--body);cursor:pointer}
+.pp-cols{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:48px;margin-top:28px}
+.pp-main>section{padding:24px 0;border-bottom:1px solid var(--line)}
+.pp-main>section:first-child{padding-top:0}
+.pp-main h3{font-family:var(--display);font-size:21px;font-weight:650;margin:0 0 14px}
+.pp-type{font-size:21px;font-weight:600;margin:0 0 4px;font-family:var(--display)}
+.pp-host{display:flex;gap:14px;align-items:center}
+.pp-host .av{width:46px;height:46px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-weight:700;font-size:18px;flex:none}
+.pp-hl{display:grid;gap:18px}
+.pp-hl div b{display:block;font-weight:600}
+.pp-hl div span{color:var(--muted);font-size:14px}
+.pp-desc{line-height:1.6;font-size:15px}
+.pp-desc h4{font-size:16px;margin:16px 0 4px}
+.pp-desc.clip{max-height:220px;overflow:hidden;-webkit-mask-image:linear-gradient(180deg,#000 70%,transparent)}
+.linkbtn{border:0;background:none;padding:0;margin-top:10px;font:600 15px var(--body);text-decoration:underline;cursor:pointer;color:var(--ink)}
+.outbtn{border:1px solid var(--ink);background:transparent;border-radius:8px;padding:11px 18px;font:600 15px var(--body);cursor:pointer;color:var(--ink);margin-top:16px}
+.pp-sleep{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px}
+.pp-sleep .bd{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.pp-sleep .bd img{width:100%;aspect-ratio:3/2;object-fit:cover;display:block}
+.pp-sleep .bd div{padding:10px 12px}
+.pp-sleep .bd b{display:block}
+.pp-sleep .bd span{font-size:13px;color:var(--muted)}
+.pp-am{display:grid;grid-template-columns:1fr 1fr;gap:12px 24px}
+.pp-am div{display:flex;gap:10px;align-items:flex-start;font-size:15px}
+.pp-am div.no{text-decoration:line-through;color:var(--muted)}
+.pp-am svg{width:20px;height:20px;flex:none;stroke:currentColor;fill:none;stroke-width:1.6;margin-top:1px}
+.pp-score{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.pp-score .big{font-family:var(--display);font-size:44px;font-weight:700;line-height:1}
+.pp-cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px 18px;margin-bottom:22px}
+.pp-cats div{font-size:13px}
+.pp-cats .cbar{height:4px;background:var(--line);border-radius:4px;margin-top:5px;overflow:hidden}
+.pp-cats .cbar i{display:block;height:100%;background:var(--ink)}
+.pp-revs{display:grid;grid-template-columns:1fr 1fr;gap:26px 40px}
+.rv .who{display:flex;gap:10px;align-items:center;margin-bottom:6px}
+.rv .who .av{width:38px;height:38px;border-radius:50%;background:var(--soft);display:grid;place-items:center;font-weight:700;color:var(--muted)}
+.rv .who b{display:block;font-size:15px}
+.rv .who span{font-size:13px;color:var(--muted)}
+.rv .rst{font-size:12px;color:var(--muted);margin-bottom:4px}
+.rv p{margin:0;font-size:15px;line-height:1.5;white-space:pre-line;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.pp-map{border:0;width:100%;height:320px;border-radius:14px;background:var(--soft)}
+.pp-know{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.pp-know h4{font-size:16px;margin:0 0 10px}
+.pp-know ul{list-style:none;padding:0;margin:0;display:grid;gap:7px;font-size:14px}
+.pp-side{position:relative}
+.pp-side .sticky{position:sticky;top:18px;display:grid;gap:14px}
+.pp-box{border:1px solid var(--line);border-radius:14px;padding:18px 18px;background:var(--panel);box-shadow:0 6px 18px -12px rgba(0,0,0,.25)}
+.pp-box h4{margin:0 0 10px;font-size:15px}
+.pp-box .row{display:flex;justify-content:space-between;gap:10px;font-size:14px;padding:5px 0;border-bottom:1px dashed var(--line)}
+.pp-box .row:last-child{border-bottom:0}
+.pp-box .row span{color:var(--muted)}
+.pp-box .row b.pos{color:var(--ok)} .pp-box .row b.neg{color:var(--warn)}
+.pp-box .nx{font-size:13px;padding:6px 0;border-bottom:1px solid var(--line)}
+.pp-box .nx:last-child{border-bottom:0}
+.pp-warn{border:1px solid color-mix(in srgb,var(--amber) 45%,transparent);background:color-mix(in srgb,var(--amber) 9%,var(--panel));border-radius:12px;padding:12px 14px;font-size:14px}
+/* modal / galería */
+.mdl{position:fixed;inset:0;z-index:60;background:var(--bg);overflow:auto;display:none;animation:mIn .25s ease}
+.mdl.on{display:block}
+.mdl .mh{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:12px;padding:12px 18px;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.mdl .mh button{border:0;background:var(--soft);border-radius:50%;width:36px;height:36px;font-size:20px;cursor:pointer;color:var(--ink)}
+.mdl .mb{max-width:860px;margin:0 auto;padding:20px 18px 60px}
+.tour-nav{display:flex;gap:10px;overflow-x:auto;padding-bottom:10px;margin-bottom:18px}
+.tour-nav button{all:unset;cursor:pointer;flex:none;width:110px;font-size:13px}
+.tour-nav img{width:110px;height:80px;object-fit:cover;border-radius:8px;display:block;margin-bottom:5px}
+.tour h4{font-family:var(--display);font-size:22px;margin:28px 0 4px}
+.tour .hl{font-size:13px;color:var(--muted);margin-bottom:12px}
+.tour .ph{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tour .ph button{all:unset;cursor:zoom-in}
+.tour .ph button.w{grid-column:1/3}
+.tour .ph img{width:100%;height:100%;object-fit:cover;display:block;border-radius:6px;aspect-ratio:3/2}
+.tour .ph button.w img{aspect-ratio:16/9}
+.lbx{position:fixed;inset:0;z-index:70;background:rgba(10,10,12,.96);display:none;align-items:center;justify-content:center;flex-direction:column;color:#fff}
+.lbx.on{display:flex}
+.lbx img{max-width:92vw;max-height:78vh;object-fit:contain;border-radius:4px;animation:mIn .25s ease}
+.lbx .cap{margin-top:12px;font-size:14px;max-width:80vw;text-align:center;opacity:.85}
+.lbx .ct{position:absolute;top:14px;left:50%;transform:translateX(-50%);font-size:14px;opacity:.8}
+.lbx button{position:absolute;border:1px solid rgba(255,255,255,.4);background:rgba(255,255,255,.08);color:#fff;border-radius:50%;width:44px;height:44px;font-size:22px;cursor:pointer}
+.lbx .x{top:12px;left:14px}.lbx .pv{left:16px;top:50%}.lbx .nx{right:16px;top:50%}
+@keyframes mIn{from{opacity:0;transform:translateY(8px)}to{opacity:1}}
+/* ===== Economía (Finanzas) ===== */
+.econ-alert{display:grid;gap:8px;margin:0 0 18px}
+.econ-alert div{display:flex;gap:10px;align-items:flex-start;border:1px solid color-mix(in srgb,var(--warn) 30%,var(--line));background:color-mix(in srgb,var(--warn) 6%,var(--panel));border-radius:12px;padding:11px 14px;font-size:14px}
+.econ-alert div.amb{border-color:color-mix(in srgb,var(--amber) 40%,var(--line));background:color-mix(in srgb,var(--amber) 7%,var(--panel))}
+.econ-alert b{white-space:nowrap}
+.be-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.be{border:1px solid var(--line);border-radius:14px;padding:16px;background:var(--panel)}
+.be h4{display:flex;align-items:center;gap:8px;margin:0 0 2px;font-size:16px}
+.be .fl{font-size:12px;color:var(--muted);margin-bottom:10px}
+.be .meter{position:relative;height:12px;border-radius:12px;background:var(--soft);margin:12px 0 6px;overflow:visible}
+.be .meter i{position:absolute;left:0;top:0;bottom:0;border-radius:12px;background:var(--c)}
+.be .meter b{position:absolute;top:-5px;bottom:-5px;width:3px;background:var(--ink);border-radius:2px}
+.be .ml{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
+.be .row{display:flex;justify-content:space-between;font-size:13.5px;padding:4px 0;border-bottom:1px dashed var(--line)}
+.be .row:last-child{border-bottom:0}
+.be .row span{color:var(--muted)}
+.be .verdict{margin-top:10px;font-size:13.5px;font-weight:600}
+.be .verdict.pos{color:var(--ok)} .be .verdict.neg{color:var(--warn)}
+.pl td.sub{padding-left:22px;color:var(--muted)}
+.pl tr.tot td{font-weight:700;border-top:2px solid var(--line)}
+.pl .note2{font-size:12px;color:var(--muted)}
+.econ-tools{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:-4px 0 14px;font-size:13px;color:var(--muted)}
+@media (max-width:900px){
+  .pp-cols{grid-template-columns:1fr;gap:10px}
+  .pp-side .sticky{position:static}
+  .pp-gal{grid-template-columns:1fr;grid-template-rows:1fr;height:clamp(220px,62vw,340px)}
+  .pp-gal>button[data-ph]:not(:first-child){display:none}
+  .pp-revs,.pp-am{grid-template-columns:1fr}
+  .pp-know{grid-template-columns:1fr}
+  .tour .ph{grid-template-columns:1fr}.tour .ph button.w{grid-column:auto}
+}
+
 @media (max-width:1100px){ .dash,.two{grid-template-columns:1fr} }
 @media (max-width:900px){
   #app.on{grid-template-columns:1fr}
@@ -361,6 +503,7 @@ tr:hover td{background:var(--soft)}
     <div class="brand"><img src="logo.png" alt=""><div><b>PR Host</b><span>Calle del Cristo 154</span></div></div>
     <nav class="side" aria-label="Secciones">
       <button data-v="home" class="on"><svg viewBox="0 0 24 24"><path d="M4 21V10l8-6 8 6v11"/><path d="M9 21v-6a3 3 0 0 1 6 0v6"/></svg>Inicio</button>
+      <button data-v="props"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg>Propiedades</button>
       <button data-v="cal"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Calendario</button>
       <button data-v="hist"><svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>Reservas</button>
       <button data-v="sum"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Resumen</button>
@@ -391,6 +534,13 @@ tr:hover td{background:var(--soft)}
         <div class="panel"><h3>Actividad reciente <small>de Airbnb y VRBO</small></h3><div id="activity"></div></div>
       </div>
       <div class="panel chart"><h3>Ingresos por mes <small>pago al anfitrión por fecha de llegada · los meses futuros son reservas ya confirmadas</small></h3><div id="revChart"></div><div class="legend" id="revLeg"></div></div>
+    </section>
+
+    <!-- PROPIEDADES -->
+    <section class="view" id="v-props">
+      <div class="vhead" id="propHead"><h2>Propiedades</h2><span class="sub">Cada anuncio tal como se ve en Airbnb y VRBO, con sus números de PR Host</span></div>
+      <div class="plist" id="propList"></div>
+      <div id="propOne" hidden></div>
     </section>
 
     <!-- CALENDARIO -->
@@ -449,6 +599,7 @@ tr:hover td{background:var(--soft)}
         <span class="count" id="fAcct"></span>
       </div>
       <div class="fin-grid" id="fKpis"></div>
+      <div id="fEcon"></div>
       <div class="card"><h3>Ingresos de plataformas vs. gastos operativos por mes</h3><div id="fChart"></div>
         <div class="legend"><span class="tag"><span class="dot" style="background:var(--ok)"></span>Ingresos Airbnb + VRBO</span><span class="tag"><span class="dot" style="background:var(--warn)"></span>Gastos operativos</span><span class="tag"><span class="dot" style="background:var(--accent)"></span>Pagado a socios (Julio / José)</span></div></div>
       <div class="card"><h3>Estimado semanal vs. real (promedio del período)</h3><div class="mtx"><table id="fEst"></table></div>
@@ -465,6 +616,8 @@ tr:hover td{background:var(--soft)}
     <div class="foot" id="srcnote"></div>
   </main>
 </div>
+<div class="mdl" id="pModal" role="dialog" aria-modal="true"><div class="mh"><button aria-label="Cerrar">×</button><b class="mt"></b></div><div class="mb"></div></div>
+<div class="lbx" id="pLbx" role="dialog" aria-modal="true" aria-label="Foto"><span class="ct"></span><button class="x" aria-label="Cerrar">×</button><button class="pv" aria-label="Anterior">‹</button><img alt=""><div class="cap"></div><button class="nx" aria-label="Siguiente">›</button></div>
 <div id="detail" role="dialog" aria-label="Detalle de reserva"><button class="x" aria-label="Cerrar" id="dClose">×</button><div id="dbody"></div></div>
 
 <script>
@@ -552,7 +705,7 @@ function start(data){
   P=DATA.props; R=DATA.res; TODAY=new Date(); tISO=iso(TODAY);
   if(!STARTED){ state.y=TODAY.getFullYear(); state.m=TODAY.getMonth(); }
   document.getElementById('lock').hidden=true; document.getElementById('app').classList.add('on');
-  if(!STARTED){ wire(); if(data.fin) initFinSafe(); }
+  if(!STARTED){ wire(); wireProps(); if(data.fin) initFinSafe(); }
   STARTED=true; renderAll(); renderSync();
 }
 
@@ -930,14 +1083,14 @@ function renderYearGrid(oy){
 }
 
 function renderViews(){ buildFilters(); renderCal(); renderHist(); renderSum(); }
-function renderAll(){ renderHome(); renderViews();
+function renderAll(){ renderHome(); renderViews(); try{ renderProps(); }catch(e){ console.error(e); } try{ if(BUNDLE.fin&&BUNDLE.econ) renderEcon(); }catch(e){ console.error(e); }
   document.getElementById('srcnote').textContent=`${R.length} reservas desde nov 2020 · Airbnb y VRBO · reservas por calendario iCal cada 30 min, precios y pagos una vez al día.`; }
 
 function wire(){
   const go=v=>{ state.view=v; document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('on',x.dataset.v===v));
     document.querySelectorAll('.view').forEach(s=>s.classList.toggle('on',s.id==='v-'+v)); window.scrollTo(0,0); try{history.replaceState(null,'','#'+v)}catch(e){} };
-  document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>go(b.dataset.v));
-  const h=location.hash.slice(1); if(['home','cal','hist','sum','fin'].includes(h)) go(h);
+  document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{ if(b.dataset.v==='props'&&PROP_CUR) closeProp(); go(b.dataset.v); });
+  const h=location.hash.slice(1); const hp=h.split('/'); if(['home','props','cal','hist','sum','fin'].includes(hp[0])) go(hp[0]); if(hp[0]==='props'&&hp[1]&&BUNDLE.listings&&BUNDLE.listings[hp[1]]){ go('props'); openProp(hp[1],hp[2]==='vrbo'?'vrbo':'airbnb'); }
   document.getElementById('prev').onclick=()=>{ state.m--; if(state.m<0){state.m=11;state.y--;} renderCal(); };
   document.getElementById('next').onclick=()=>{ state.m++; if(state.m>11){state.m=0;state.y++;} renderCal(); };
   document.getElementById('today').onclick=()=>{ state.y=TODAY.getFullYear(); state.m=TODAY.getMonth(); renderCal(); };
@@ -955,6 +1108,284 @@ function wire(){
   let sx=null; const gr=document.getElementById('grid');
   gr.addEventListener('touchstart',e=>{sx=e.touches[0].clientX},{passive:true});
   gr.addEventListener('touchend',e=>{ if(sx==null) return; const dx=e.changedTouches[0].clientX-sx; if(Math.abs(dx)>60) document.getElementById(dx<0?'next':'prev').click(); sx=null; });
+}
+
+/* ================= economía: depuración + punto de equilibrio ================= */
+const MONTH_D=30.44;
+function nextMonth(m){ const [y,mm]=m.split('-').map(Number); return mm===12?`${y+1}-01`:`${y}-${String(mm+1).padStart(2,'0')}`; }
+function prevMonth(m){ const [y,mm]=m.split('-').map(Number); return mm===1?`${y-1}-12`:`${y}-${String(mm-1).padStart(2,'0')}`; }
+function econAllocMode(){ try{ return localStorage.getItem('prh_alloc')||'cap'; }catch(e){ return 'cap'; } }
+function econModel(mode){
+  const E=BUNDLE&&BUNDLE.econ, F=BUNDLE&&BUNDLE.fin; if(!E||!F) return null;
+  mode=mode||econAllocMode();
+  const tx=F.tx; const months=[...new Set(tx.map(x=>x.date.slice(0,7)))].sort(); const last=months[months.length-1];
+  const wm=[last]; while(wm.length<12) wm.unshift(prevMonth(wm[0]));
+  const W0=wm[0]+'-01', W1=nextMonth(last)+'-01';
+  const g2={}; Object.entries(E.groups).forEach(([g,cs])=>cs.forEach(c=>g2[c]=g));
+  const cat={}, grp={ing:0,fijo:0,var:0,revisar:0,luz:0,fuera:0};
+  tx.forEach(x=>{ if(x.date<W0||x.date>=W1) return; const g=x.grp==='ing'?'ing':(g2[x.cat]||'revisar'); grp[g]+=x.amt; cat[x.cat]=(cat[x.cat]||0)+x.amt; });
+  const rentAt=m=>{ let a=0; E.rent.sched.forEach(s=>{ if(s.from<=m) a=s.amt; }); return a; };
+  const rentAcc=wm.reduce((a,m)=>a+rentAt(m),0), rentPaid=-(cat['Renta']||0), rentNow=rentAt(iso(new Date()).slice(0,7));
+  // atraso de renta desde el primer mes con banco
+  const allRentOwed=months.reduce((a,m)=>a+rentAt(m),0), allRentPaid=-tx.filter(x=>x.cat==='Renta').reduce((a,x)=>a+x.amt,0);
+  // luz por facturas (devengado)
+  const bills=E.luma.bills; let luzSum=0, luzDays=0, late=0;
+  bills.forEach(b=>{ late+=b.late||0; if(b.cur==null) return; luzSum+=b.cur+(b.cancel||0); });
+  const known=bills.filter(b=>b.cur!=null); const span=(dt(known[known.length-1].q)-dt(known[0].p))/864e5;
+  const missDays=bills.filter(b=>b.cur==null).reduce((a,b)=>a+(dt(b.q)-dt(b.p))/864e5,0);
+  luzDays=span-missDays; const luzM=luzSum/(luzDays/MONTH_D), lateM=late/((span)/MONTH_D);
+  const luzPaid=-(cat['LUMA (luz)']||0);
+  // fijos del negocio (mensual, a ritmo actual)
+  const fixedLines=[['Renta (San Juan Historical)',rentNow,'contrato actual'],['Luz – LUMA',luzM,'promedio de facturas 2026'],['Recargos por atraso LUMA',lateM,'evitables']];
+  E.groups.fijo.filter(c=>c!=='Renta').forEach(c=>{ const v=-(cat[c]||0)/12; if(Math.abs(v)>0.5) fixedLines.push([c,v,'promedio 12 meses']); });
+  const revLines=E.groups.revisar.map(c=>[c,-(cat[c]||0)/12]).filter(x=>Math.abs(x[1])>0.5);
+  const fixedM=fixedLines.reduce((a,x)=>a+x[1],0)+revLines.reduce((a,x)=>a+x[1],0);
+  // variables por estadía (limpieza, lavandería, suministros), repartidos por capacidad
+  const varTot=-grp.var; const st={};
+  ['LA','GS','LB','VB'].forEach(k=>st[k]={stays:0,nights:0,pay:0,payN:0,n12:0});
+  R.filter(r=>active(r)&&r.ci>=W0&&r.ci<W1).forEach(r=>{ const s=st[r.prop]; if(!s) return; s.stays++; s.nights+=r.n; if(r.pay){ s.pay+=r.pay; s.payN+=r.n; } });
+  R.filter(active).forEach(r=>{ if(st[r.prop]) st[r.prop].n12+=nightsIn(r,W0,W1); });
+  const wsum=Object.entries(st).reduce((a,[k,s])=>a+s.stays*E.cap[k],0)||1; const perCap=varTot/wsum;
+  const revTot=Object.values(st).reduce((a,s)=>a+s.pay,0)||1;
+  const rev2=st.LA.pay+st.GS.pay+st.LB.pay;
+  const share2=mode==='rev'?rev2/revTot:mode==='half'?0.5:E.cap.LA/(E.cap.LA+E.cap.VB);
+  const FF={2:fixedM*share2,3:fixedM*(1-share2)};
+  const units={};
+  Object.entries(st).forEach(([k,s])=>{
+    const varStay=perCap*E.cap[k], len=s.stays?s.nights/s.stays:null, adr=s.payN?s.pay/s.payN:null;
+    const varN=len?varStay/len:null, contrib=adr!=null&&varN!=null?adr-varN:null, fl=E.floor[k], fx=FF[fl];
+    const beN=contrib>0?fx/contrib:null, nm=s.n12/12;
+    units[k]={k,fl,stays:s.stays,nights:s.nights,n12:s.n12,nm,pay:s.pay,adr,len,varStay,varN,contrib,fixed:fx,beN,beOcc:beN!=null?beN/MONTH_D:null,occ:s.n12/365,
+      minAdr:nm>0?fx/nm+(varN||0):null};
+  });
+  const floor=f=>{ const ks=Object.keys(units).filter(k=>units[k].fl===f); const pay=ks.reduce((a,k)=>a+units[k].pay,0), vc=ks.reduce((a,k)=>a+units[k].varStay*units[k].stays,0);
+    return {pay,vc,contribM:(pay-vc)/12,fixedM:FF[f],profitM:(pay-vc)/12-FF[f],nights:ks.reduce((a,k)=>a+units[k].n12,0)}; };
+  const fixOther=E.groups.fijo.filter(c=>c!=='Renta').reduce((a,c)=>a+(cat[c]||0),0);
+  const fixedTot=fixOther-rentAcc-luzM*12-lateM*12;
+  const opD=grp.ing+grp.var+fixedTot+grp.revisar;
+  return {mode,wm,W0,W1,last,months,grp,cat,fixedTot,opD,rentAcc,rentPaid,rentNow,allRentOwed,allRentPaid,luzM,lateM,late,luzPaid,luzAcc:luzM*12,fixedLines,revLines,fixedM,varTot,perCap,units,share2,
+    floors:{2:floor(2),3:floor(3)}, bills, E};
+}
+
+function renderEcon(){
+  const host=document.getElementById('fEcon'); if(!host) return;
+  const M=econModel(); if(!M){ host.innerHTML=''; return; }
+  const usd=(v,d=0)=>v==null||isNaN(v)?'—':(v<0?'-':'')+'$'+Math.abs(v).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+  const pct=v=>v==null?'—':Math.round(v*100)+'%';
+  const ml=m=>MESc[+m.slice(5)-1]+' '+m.slice(2,4);
+  const lb=M.bills[M.bills.length-1];
+  const unid=-(M.cat['Sin identificar']||0);
+  const owe=M.allRentOwed-M.allRentPaid;
+  const opRes=M.opD;
+  const dist=-(M.cat['Socios (Julio / José Oti)']||0)-(M.cat['Transferencias a cuenta personal']||0)-(M.cat['Préstamos']||0);
+  // alertas
+  const al=[];
+  if(lb&&lb.total) al.push(['',`<b>LUMA: ${usd(lb.total,2)}</b> <span>vence el ${fmt(lb.due)}. Incluye ${usd(lb.overdue,2)} vencido (pague inmediatamente) y un <b>depósito de ${usd(lb.deposit,2)}</b> que LUMA añadió en noviembre. Llevan ${usd(M.late,2)} en recargos por atraso este año.</span>`]);
+  if(owe>100) al.push(['',`<b>Renta: ${usd(owe)} posible atraso</b> <span>Según el banco se pagaron ${usd(M.allRentPaid)} de ${usd(M.allRentOwed)} desde ${ml(M.months[0])} (≈ ${(owe/M.rentNow).toFixed(1)} meses). Confirmar con San Juan Historical; puede haberse pagado desde otra cuenta.</span>`]);
+  if(lb&&M.bills.some(b=>b.missing)) al.push(['amb',`<b>Falta una factura de LUMA</b> <span>No está la de mayo–junio 2026; su cargo se estimó con el promedio.</span>`]);
+  if(unid>0) al.push(['amb',`<b>${usd(unid,2)} en cheques sin identificar</b> <span>#13–16 (jul–ago 2026). Se cuentan como gasto "por revisar".</span>`]);
+  if(dist>opRes) al.push(['amb',`<b>Se repartió más de lo que se generó</b> <span>En 12 meses: resultado operativo depurado ${usd(opRes)} vs. ${usd(dist)} pagado a socios, transferencias y préstamos. La diferencia se está cubriendo atrasando renta y luz.</span>`]);
+  // tarjetas por anuncio
+  const card=k=>{ const u=M.units[k]; const c=COLOR(k); if(!u.stays&&!u.n12) return `<div class="be"><h4><span class="dot" style="background:var(--${k})"></span>${esc(P[k])}</h4><div class="fl">${u.fl===2?'2do piso':'3er piso'}</div><p class="note">Sin estadías en los últimos 12 meses; no se puede calcular.</p></div>`;
+    const occ=u.occ, be=u.beOcc; const mx=Math.max(1,occ||0,be||0);
+    const ok=be!=null&&occ>=be;
+    const alone=k==='GS'||k==='LB';
+    return `<div class="be" style="--c:var(--${k})"><h4><span class="dot" style="background:var(--${k})"></span>${esc(P[k])}</h4>
+      <div class="fl">${u.fl===2?'2do piso':'3er piso'} · ${u.stays} estadías · ${u.nights} noches en 12 meses${alone?' · parte de Las Arcadas':''}</div>
+      ${alone?'':`<div class="meter"><i style="width:${Math.min(100,(occ||0)/mx*100)}%"></i>${be!=null?`<b style="left:${Math.min(100,be/mx*100)}%" title="Punto de equilibrio"></b>`:''}</div>
+      <div class="ml"><span>Ocupación real ${pct(occ)}</span><span>Equilibrio ${be!=null?pct(be):'—'}</span></div>`}
+      <div class="row"><span>Ingreso neto por noche</span><b>${usd(u.adr)}</b></div>
+      <div class="row"><span>Costo variable por noche</span><b>${usd(u.varN)}</b></div>
+      <div class="row"><span>Margen por noche</span><b>${usd(u.contrib)}</b></div>
+      <div class="row"><span>Costos fijos del ${u.fl===2?'2do':'3er'} piso / mes</span><b>${usd(u.fixed)}</b></div>
+      <div class="row"><span>Noches para cubrir el mes</span><b>${u.beN!=null?u.beN.toFixed(1):'—'}</b></div>
+      <div class="row"><span>Noches reales / mes</span><b>${u.nm.toFixed(1)}</b></div>
+      ${!alone&&u.minAdr?`<div class="row"><span>Tarifa neta mínima a esta ocupación</span><b>${usd(u.minAdr)}</b></div>`:''}
+      <div class="verdict ${alone?'':ok?'pos':'neg'}">${alone?`Si solo se alquilara esta parte, haría falta ${u.beN!=null?u.beN.toFixed(0):'—'} noches al mes para cubrir el piso.`:ok?`Por encima del equilibrio: cubre sus costos.`:`Por debajo del equilibrio: faltan ${u.beN!=null?(u.beN-u.nm).toFixed(1):'—'} noches al mes.`}</div></div>`; };
+  const fl=f=>{ const x=M.floors[f]; return `<div class="row"><span>${f===2?'2do piso (Las Arcadas + partes)':'3er piso (Vista Bahía)'}</span><b class="${x.profitM>=0?'pos':'neg'}">${usd(x.profitM)} / mes</b></div>`; };
+  // estado de resultados depurado
+  const row=(l,v,cls='',n='')=>`<tr class="${cls}"><td class="${cls==='sub'?'sub':''}">${l}${n?` <span class="note2">${n}</span>`:''}</td><td class="num">${usd(v)}</td><td class="num">${usd(v/12)}</td></tr>`;
+  let pl='';
+  pl+=row('<b>Ingresos de plataformas y otros</b>',M.grp.ing);
+  ['Ingreso Airbnb','Ingreso VRBO','Otros ingresos'].forEach(c=>{ if(M.cat[c]) pl+=row(c,M.cat[c],'sub'); });
+  pl+=row('<b>Costos variables por estadía</b>',M.grp.var);
+  M.E.groups.var.forEach(c=>{ if(M.cat[c]) pl+=row(c,M.cat[c],'sub'); });
+  pl+=row('<b>Costos fijos</b>',M.fixedTot);
+  pl+=row('Renta (lo que corresponde al período)',-M.rentAcc,'sub',`pagado en banco: ${usd(M.rentPaid)}`);
+  pl+=row('Luz – LUMA (según facturas)',-M.luzAcc,'sub',`pagado en banco: ${usd(M.luzPaid)}`);
+  pl+=row('Recargos por atraso LUMA',-M.lateM*12,'sub');
+  M.E.groups.fijo.filter(c=>c!=='Renta').forEach(c=>{ if(M.cat[c]) pl+=row(c,M.cat[c],'sub'); });
+  pl+=row('<b>Por revisar</b>',M.grp.revisar,'','sin identificar / ATH / efectivo');
+  M.E.groups.revisar.forEach(c=>{ if(M.cat[c]) pl+=row(c,M.cat[c],'sub'); });
+  pl+=row('Resultado operativo depurado',M.opD,'tot');
+  pl+=row('<b>Fuera de la operación</b>',M.grp.fuera,'','dueños, socios, préstamos');
+  M.E.groups.fuera.forEach(c=>{ if(M.cat[c]) pl+=row(c,M.cat[c],'sub'); });
+  // tabla LUMA
+  const lt=M.bills.map(b=>`<tr><td>${fmt(b.p)} – ${fmt(b.q)}</td><td class="num">${b.kwh!=null?b.kwh.toLocaleString('en-US'):'—'}</td><td class="num">${b.cur!=null?usd(b.cur+(b.cancel||0),2):'<span class="badge">falta</span>'}</td><td class="num">${b.late!=null?usd(b.late,2):'—'}</td><td class="num">${b.paid!=null?usd(b.paid,2):'—'}</td><td class="num"><b>${usd(b.total,2)}</b></td><td style="white-space:normal;font-size:12px;color:var(--muted)">${b.note?esc(b.note):b.deposit?`Incluye depósito ${usd(b.deposit,2)}`:''}</td></tr>`).join('');
+  const mode=M.mode;
+  host.innerHTML=`
+   <div class="econ-alert">${al.map(([c,t])=>`<div class="${c}">${t}</div>`).join('')}</div>
+   <div class="card"><h3>Punto de equilibrio por anuncio <small style="font-weight:500;color:var(--muted);font-size:13px">últimos 12 meses (${ml(M.wm[0])} – ${ml(M.last)}) · costos fijos al ritmo actual</small></h3>
+     <div class="econ-tools">Repartir costos fijos entre pisos:
+       <select id="eAlloc"><option value="cap"${mode==='cap'?' selected':''}>Por capacidad (${Math.round(M.E.cap.LA/(M.E.cap.LA+M.E.cap.VB)*100)}% / ${Math.round(M.E.cap.VB/(M.E.cap.LA+M.E.cap.VB)*100)}%)</option><option value="rev"${mode==='rev'?' selected':''}>Por ingresos</option><option value="half"${mode==='half'?' selected':''}>Mitad y mitad</option></select>
+       <span>Costos fijos del edificio: <b>${usd(M.fixedM)}</b>/mes · 2do piso ${pct(M.share2)} · 3er piso ${pct(1-M.share2)}</span></div>
+     <div class="be-grid">${['LA','VB','GS','LB'].map(card).join('')}</div>
+     <div class="pp-box" style="margin-top:14px;box-shadow:none"><h4>Resultado mensual por piso (después de costos fijos)</h4>${fl(2)}${fl(3)}</div>
+     <p class="note" style="margin-top:10px">Ingreso neto = pago al anfitrión de Airbnb/VRBO. Costo variable = limpieza, lavandería y suministros, repartidos por estadía según capacidad (Las Arcadas 16, Garita 8, Los Balcones 6, Vista Bahía 4): ${usd(M.perCap,2)} por plaza por estadía. Costos fijos = renta actual + luz promedio de las facturas + promedio mensual de seguros, contabilidad, internet, impuestos, parking, arreglos y otros. El 2do piso se reparte entre Las Arcadas, Garita y Los Balcones porque es el mismo espacio.</p></div>
+   <div class="card"><h3>Costos fijos del edificio por mes</h3><div class="mtx"><table class="pl"><thead><tr><th>Concepto</th><th class="num">Por mes</th><th>Base</th></tr></thead><tbody>
+     ${M.fixedLines.map(([l,v,b])=>`<tr><td>${esc(l)}</td><td class="num">${usd(v)}</td><td class="note2">${b}</td></tr>`).join('')}
+     ${M.revLines.map(([l,v])=>`<tr><td>${esc(l)} <span class="badge">por revisar</span></td><td class="num">${usd(v)}</td><td class="note2">promedio 12 meses</td></tr>`).join('')}
+     <tr class="tot"><td>Total</td><td class="num">${usd(M.fixedM)}</td><td></td></tr></tbody></table></div></div>
+   <div class="card"><h3>Estado de resultados depurado <small style="font-weight:500;color:var(--muted);font-size:13px">${ml(M.wm[0])} – ${ml(M.last)}</small></h3><div class="mtx"><table class="pl"><thead><tr><th>Concepto</th><th class="num">12 meses</th><th class="num">Por mes</th></tr></thead><tbody>${pl}</tbody></table></div>
+     <p class="note" style="margin-top:8px">Depuración: los cheques devueltos y su reemisión se cuentan una sola vez; la renta y la luz se cuentan por lo que se debe en el período (devengado), no solo por lo que se pagó; los pagos a socios, transferencias y préstamos quedan fuera de la operación.</p></div>
+   <div class="card"><h3>Luz – LUMA 2026 <small style="font-weight:500;color:var(--muted);font-size:13px">cuenta ${esc(M.E.luma.account)} · ${esc(M.E.luma.tariff)} · ${esc(M.E.luma.meter)}</small></h3><div class="mtx"><table><thead><tr><th>Periodo</th><th class="num">kWh</th><th class="num">Cargo del mes</th><th class="num">Recargo</th><th class="num">Pagado</th><th class="num">Total adeudado</th><th>Nota</th></tr></thead><tbody>${lt}</tbody></table></div>
+     <p class="note" style="margin-top:8px">Promedio: ${usd(M.luzM)} al mes. En verano (jun–jul) el consumo sube a unos 5,470 kWh; en invierno ronda 3,300 kWh.</p></div>`;
+  const sel=document.getElementById('eAlloc'); if(sel) sel.onchange=()=>{ try{ localStorage.setItem('prh_alloc',sel.value); }catch(e){} renderEcon(); if(PROP_CUR) openProp(PROP_CUR,PROP_PLAT,true); };
+}
+
+/* ================= propiedades ================= */
+const PIMG=(u,w)=>/muscache\.com/.test(u)?u+'?im_w='+(w||720):u;
+let PROP_CUR=null, PROP_PLAT='airbnb', LBX={list:[],i:0};
+const AM_ICON='<svg viewBox="0 0 24 24"><path d="M5 12l4 4L19 6"/></svg>';
+const AM_NO='<svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+function listingKeys(){ const L=BUNDLE&&BUNDLE.listings; return ['LA','VB','GS','LB'].filter(k=>L&&L[k]); }
+function unitStats(k){
+  const to=tISO, from=addD(tISO,-365); const rs=R.filter(r=>active(r)&&r.prop===k);
+  const n12=rs.reduce((a,r)=>a+nightsIn(r,from,to),0);
+  const past=rs.filter(r=>r.ci>=from&&r.ci<to&&r.pay); const pay=past.reduce((a,r)=>a+r.pay,0), nn=past.reduce((a,r)=>a+r.n,0);
+  const next=rs.filter(r=>r.co>to).sort((a,b)=>a.ci<b.ci?-1:1).slice(0,4);
+  return {occ:n12/365, adr:nn?pay/nn:null, pay12:pay, stays:past.length, next, total:rs.filter(r=>r.st==='Completada').length};
+}
+function renderProps(){
+  const host=document.getElementById('propList'); if(!host) return;
+  const L=BUNDLE.listings; if(!L){ host.innerHTML='<p class="note">Todavía no hay datos de los anuncios.</p>'; return; }
+  host.innerHTML=listingKeys().map(k=>{ const a=L[k].airbnb, ov=a.ov, st=unitStats(k), ph=a.photos[0]||{u:'',c:''};
+    return `<button class="pcard" data-k="${k}" aria-label="Abrir ${esc(P[k])}"><div class="pimg"><img loading="lazy" src="${PIMG(ph.u,720)}" alt="${esc(ph.c)}"><span class="pfl">${FLOOR[k]===2?'2do piso':'3er piso'}</span></div>
+     <div class="pbody"><div class="ptop"><b>${esc(P[k])}</b>${ov.rating?`<span class="prate">★ ${ov.rating.toFixed(2)}</span>`:'<span class="prate new">Nuevo</span>'}</div>
+     <div class="psub">${esc(ov.line)}</div><div class="psub">${st.adr?money0(st.adr)+' neto por noche · ':''}${Math.round(st.occ*100)}% ocupado en 12 meses</div></div></button>`; }).join('');
+  if(PROP_CUR) openProp(PROP_CUR,PROP_PLAT,true);
+}
+function photoList(k,plat){ const L=BUNDLE.listings[k]; if(plat==='vrbo'&&L.vrbo) return L.vrbo.photos.map(p=>({u:p.u,c:p.c,room:''})); return L.airbnb.photos; }
+function openProp(k,plat,keepScroll){
+  const L=BUNDLE.listings&&BUNDLE.listings[k]; if(!L) return;
+  if(plat==='vrbo'&&!L.vrbo) plat='airbnb';
+  PROP_CUR=k; PROP_PLAT=plat;
+  document.getElementById('propList').hidden=true; document.getElementById('propHead').hidden=true;
+  const box=document.getElementById('propOne'); box.hidden=false;
+  try{ history.replaceState(null,'','#props/'+k+(plat==='vrbo'?'/vrbo':'')); }catch(e){}
+  const a=L.airbnb, v=L.vrbo, isV=plat==='vrbo';
+  const ph=photoList(k,plat); const st=unitStats(k); const M=econModel(); const u=M&&M.units[k];
+  const us=unitState(k);
+  const title=isV?v.title:a.title;
+  const rating=isV?(v.rating10!=null?`<b>★ ${v.rating10}/10</b> · ${v.reviews} ${v.reviews===1?'reseña':'reseñas'}`:''):(a.ov.rating?`<b>★ ${a.ov.rating.toFixed(2)}</b> · ${a.ov.reviews} reseñas`:'<b>Nuevo</b> · sin reseñas todavía');
+  const gal=ph.slice(0,5).map((p,i)=>`<button data-ph="${i}" aria-label="Ver foto ${i+1}"><img src="${PIMG(p.u,i?720:1200)}" alt="${esc(p.c)}" loading="${i?'lazy':'eager'}"></button>`).join('');
+  const sideRate=DATA.rates[k]&&DATA.rates[k][tISO];
+  const side=`<div class="sticky">
+    <div class="pp-box"><h4>${esc(P[k])} en PR Host</h4>
+      <div class="row"><span>Esta noche</span><b>${us.r?'Ocupada':us.inc?'Con Las Arcadas':us.blk?'Bloqueada':'Libre'}</b></div>
+      ${sideRate&&sideRate[0]?`<div class="row"><span>Tarifa de hoy en Airbnb</span><b>${money0(sideRate[0])}</b></div>`:''}
+      <div class="row"><span>Ocupación 12 meses</span><b>${Math.round(st.occ*100)}%</b></div>
+      <div class="row"><span>Ingreso neto 12 meses</span><b>${money0(st.pay12)}</b></div>
+      <div class="row"><span>Neto por noche</span><b>${money0(st.adr)}</b></div>
+      <div class="row"><span>Estadías completadas (total)</span><b>${st.total}</b></div></div>
+    ${u&&u.beOcc!=null?`<div class="pp-box"><h4>Punto de equilibrio</h4>
+      <div class="row"><span>Noches para cubrir el mes</span><b>${u.beN.toFixed(1)}</b></div>
+      <div class="row"><span>Ocupación de equilibrio</span><b>${Math.round(u.beOcc*100)}%</b></div>
+      <div class="row"><span>Noches reales / mes</span><b class="${(k==='GS'||k==='LB')?'':u.nm>=u.beN?'pos':'neg'}">${u.nm.toFixed(1)}</b></div>
+      <div class="row"><span>Margen por noche</span><b>${money0(u.contrib)}</b></div>
+      <button class="linkbtn" data-go="fin">Ver detalle en Finanzas</button></div>`:''}
+    <div class="pp-box"><h4>Próximas reservas</h4>${st.next.length?st.next.map(r=>`<div class="nx"><b>${esc(r.guest)}</b> · ${fmtS(r.ci)} → ${fmtS(r.co)} · ${r.n} noches <span class="note">(${r.plat})</span></div>`).join(''):'<div class="nx note">Sin reservas futuras.</div>'}</div>
+    ${k==='VB'&&v&&(v.nearby||[]).some(x=>/Sheraton|Condado|Convention/i.test(x))?`<div class="pp-warn"><b>Revisar en VRBO:</b> el mapa de este anuncio ubica la propiedad cerca de Condado (Sheraton, Distrito T-Mobile a 1–2 minutos). Conviene corregir el pin al Viejo San Juan.</div>`:''}
+  </div>`;
+  let main='';
+  if(!isV){
+    const descH=a.desc.map(d=>`${d.t?`<h4>${esc(d.t)}</h4>`:''}<div>${d.html}</div>`).join('');
+    const roomPhoto=t=>{ const r=a.rooms.find(x=>x.t.toLowerCase()===t.toLowerCase()); const id=r&&r.ids[0]; const p=id&&a.photos.find(x=>x.id===id); return p?PIMG(p.u,480):''; };
+    const amAll=a.amenities.flatMap(g=>g.items.map(i=>({...i,g:g.g})));
+    const amTop=amAll.filter(i=>i.g!=='Not included').slice(0,10);
+    const cats=Object.entries(a.cats||{});
+    const RL=a.rules.filter(x=>!/^(House rules|Host requests|During the stay|Before you leave|Checking out)$/.test(x));
+    const catES={cleanliness:'Limpieza',accuracy:'Exactitud','check-in':'Llegada',communication:'Comunicación',location:'Ubicación',value:'Calidad-precio'};
+    main=`
+     <section><p class="pp-type">${esc(a.ov.type)}</p><div>${esc(a.ov.line)}</div>
+       ${a.ov.rating?`<div class="pp-score" style="margin:16px 0 0"><span class="big">${a.ov.rating.toFixed(2)}</span><div><b>${a.guestFav?'Favorito de los huéspedes':'Calificación general'}</b><div class="note">${a.ov.reviews} reseñas en Airbnb</div></div></div>`:''}</section>
+     <section class="pp-host"><div class="av">${esc((a.host.name||'?')[0])}</div><div><b>Anfitrión: ${esc(a.host.name)}</b><div class="note">${a.host.years?a.host.years+' años como anfitrión':''}${a.host.cohosts?` · coanfitriones: ${esc(a.host.cohosts.join(', '))}`:''}${a.host.resp?` · respuesta ${esc(a.host.resp)}`:''}</div></div></section>
+     ${a.highlights.length?`<section class="pp-hl">${a.highlights.map(h=>`<div><b>${esc(h.t)}</b><span>${esc(h.s)}</span></div>`).join('')}</section>`:''}
+     <section><h3>Sobre este espacio</h3><div class="pp-desc clip" id="ppDesc">${descH}</div><button class="linkbtn" id="ppMore">Mostrar más</button></section>
+     ${a.sleeping.length?`<section><h3>Dónde vas a dormir</h3><div class="pp-sleep">${a.sleeping.map(s=>{ const img=roomPhoto(s.t); return `<div class="bd">${img?`<img loading="lazy" src="${img}" alt="${esc(s.t)}">`:''}<div><b>${esc(s.t)}</b><span>${esc(s.s)}</span></div></div>`; }).join('')}</div></section>`:''}
+     <section><h3>Lo que ofrece este lugar</h3><div class="pp-am">${amTop.map(i=>`<div>${AM_ICON}<span>${esc(i.t)}</span></div>`).join('')}</div>
+       <button class="outbtn" id="ppAm">Mostrar las ${amAll.length} comodidades</button></section>
+     <section><h3>${a.ov.rating?`★ ${a.ov.rating.toFixed(2)} · ${a.ov.reviews} reseñas`:'Reseñas'}</h3>
+       ${cats.length?`<div class="pp-cats">${cats.map(([c,v])=>`<div>${catES[c]||c} <b style="float:right">${v.toFixed(1)}</b><div class="cbar"><i style="width:${v/5*100}%"></i></div></div>`).join('')}</div>`:''}
+       ${a.reviews.length?`<div class="pp-revs">${a.reviews.slice(0,6).map(revCard).join('')}</div>${a.reviews.length>6?`<button class="outbtn" id="ppRv">Mostrar las ${a.reviews.length} reseñas descargadas</button>`:''}`:'<p class="note">Este anuncio todavía no tiene reseñas en Airbnb.</p>'}</section>
+     <section><h3>Dónde vas a estar</h3><iframe class="pp-map" loading="lazy" title="Mapa" src="https://www.openstreetmap.org/export/embed.html?bbox=-66.1215%2C18.4632%2C-66.1135%2C18.4697&layer=mapnik&marker=18.46655%2C-66.11752"></iframe>
+       <p style="margin:12px 0 4px"><b>${esc(a.location.area)}</b></p><p class="note" style="white-space:pre-line">${esc(a.location.text)}</p></section>
+     <section><h3>Lo que debes saber</h3><div class="pp-know">
+       <div><h4>Reglas de la casa</h4><ul>${a.checkin?`<li>Llegada: ${esc(a.checkin)}</li>`:''}${a.checkout?`<li>Salida antes de las ${esc(a.checkout)}</li>`:''}${RL.slice(0,9).map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>
+       <div><h4>Seguridad y propiedad</h4><ul>${a.safety.filter(x=>!/^(Safety devices|Property info)$/.test(x)).slice(0,9).map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>
+       <div><h4>Más reglas</h4><ul>${RL.slice(9,18).map(x=>`<li>${esc(x)}</li>`).join('')||'<li class="note">—</li>'}</ul><button class="linkbtn" id="ppRules">Ver todas las reglas</button></div>
+     </div></section>`;
+  } else {
+    const amV=(v.amen||[]).filter(x=>x!=='Popular amenities');
+    main=`
+     <section><p class="pp-type">${esc(v.title)}</p><div>${esc((v.hl||[]).filter(x=>/^(Sleeps|\d+ bed)/.test(x)).join(' · '))}</div>
+       ${v.rating10!=null?`<div class="pp-score" style="margin:16px 0 0"><span class="big">${v.rating10}</span><div><b>de 10 en VRBO</b><div class="note">${v.reviews} ${v.reviews===1?'reseña':'reseñas'}</div></div></div>`:''}</section>
+     ${(v.about||[]).length?`<section><h3>Sobre la propiedad</h3><div class="pp-desc">${v.about.map(x=>`<p>${esc(x)}</p>`).join('')}</div></section>`:''}
+     ${(v.beds||[]).length?`<section><h3>Cuartos y camas</h3><div class="pp-desc">${v.beds.map(x=>/^(Bedroom|Bathroom|Spaces|\d+ bed|\d+ bath)/.test(x)?`<h4>${esc(x)}</h4>`:`<div>${esc(x)}</div>`).join('')}</div></section>`:''}
+     <section><h3>Comodidades en VRBO</h3><div class="pp-am">${amV.slice(0,40).map(i=>`<div>${AM_ICON}<span>${esc(i)}</span></div>`).join('')}</div></section>
+     ${(v.nearby||[]).length?`<section><h3>Qué hay cerca (según VRBO)</h3><ul>${v.nearby.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></section>`:''}
+     <section><h3>Lo que dicen los huéspedes en VRBO</h3><div class="pp-desc" style="white-space:pre-line">${esc((v.revLines||[]).slice(0,80).join('\n'))}</div></section>`;
+  }
+  box.innerHTML=`<div class="pp">
+    <div class="pp-top"><button class="back" id="ppBack">← Propiedades</button>
+      <div class="seg" role="tablist"><button class="${!isV?'on':''}" data-pl="airbnb">Airbnb</button><button class="${isV?'on':''}" data-pl="vrbo" ${v?'':'disabled title="Este anuncio no está en VRBO"'}>VRBO</button></div>
+      <a class="ext" href="${isV?v.url:a.url}" target="_blank" rel="noopener">Ver en ${isV?'VRBO':'Airbnb'} ↗</a></div>
+    <h2 class="pp-title">${esc(title)}</h2>
+    <div class="pp-meta">${rating}<span>·</span><span>San Juan, Puerto Rico</span><span>·</span><span>${FLOOR[k]===2?'2do piso':'3er piso'} de Calle del Cristo 154</span>${!isV&&a.guestFav?'<span class="gfav">🏅 Favorito de los huéspedes</span>':''}</div>
+    <div class="pp-gal">${gal}<button class="pp-all" id="ppAll">Mostrar las ${ph.length} fotos</button></div>
+    <div class="pp-cols"><div class="pp-main">${main}</div><div class="pp-side">${side}</div></div></div>`;
+  if(!keepScroll) window.scrollTo(0,0);
+  box.querySelector('#ppBack').onclick=closeProp;
+  box.querySelectorAll('[data-pl]').forEach(b=>b.onclick=()=>{ if(!b.disabled) openProp(k,b.dataset.pl); });
+  box.querySelectorAll('.pp-gal [data-ph]').forEach(b=>b.onclick=()=>openLbx(ph,+b.dataset.ph));
+  box.querySelector('#ppAll').onclick=()=>openTour(k,plat);
+  const go=box.querySelector('[data-go]'); if(go) go.onclick=()=>document.querySelector('nav button[data-v="fin"]').click();
+  if(!isV){
+    const d=box.querySelector('#ppDesc'), m=box.querySelector('#ppMore'); m.onclick=()=>{ d.classList.toggle('clip'); m.textContent=d.classList.contains('clip')?'Mostrar más':'Mostrar menos'; };
+    box.querySelector('#ppAm').onclick=()=>openModal('Lo que ofrece este lugar',a.amenities.map(g=>`<h3 style="margin:22px 0 8px">${esc(g.g==='Not included'?'No incluido':g.g)}</h3>${g.items.map(i=>`<div style="display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)" class="${g.g==='Not included'?'note':''}">${g.g==='Not included'?AM_NO:AM_ICON}<div><div>${esc(i.t)}</div>${i.s?`<div class="note">${esc(i.s)}</div>`:''}</div></div>`).join('')}`).join(''));
+    const rv=box.querySelector('#ppRv'); if(rv) rv.onclick=()=>openModal(`★ ${a.ov.rating.toFixed(2)} · ${a.ov.reviews} reseñas`,`<p class="note">Se muestran las ${a.reviews.length} reseñas descargadas de Airbnb el ${fmt(BUNDLE.listingsAt||tISO)}.</p><div class="pp-revs" style="grid-template-columns:1fr">${a.reviews.map(r=>revCard(r,true)).join('')}</div>`);
+    box.querySelector('#ppRules').onclick=()=>openModal('Reglas de la casa',`<ul style="display:grid;gap:10px;padding-left:18px">${a.rules.map(x=>`<li>${esc(x)}</li>`).join('')}</ul><h3 style="margin-top:24px">Seguridad y propiedad</h3><ul style="display:grid;gap:10px;padding-left:18px">${a.safety.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`);
+  }
+}
+function revCard(r,full){ return `<div class="rv"><div class="who"><div class="av">${esc((r.n||'?')[0])}</div><div><b>${esc(r.n)}</b><span>${esc(r.p)}</span></div></div>
+  <div class="rst">${'★'.repeat(r.r)}${'☆'.repeat(5-r.r)} · ${esc(r.d)}${r.s?' · '+esc(r.s):''}</div><p${full?' style="-webkit-line-clamp:unset;display:block"':''}>${esc(r.t)}</p></div>`; }
+function closeProp(){ PROP_CUR=null; document.getElementById('propOne').hidden=true; document.getElementById('propList').hidden=false; document.getElementById('propHead').hidden=false; try{ history.replaceState(null,'','#props'); }catch(e){} window.scrollTo(0,0); }
+function openModal(title,html){ const m=document.getElementById('pModal'); m.querySelector('.mt').textContent=title; m.querySelector('.mb').innerHTML=html; m.classList.add('on'); m.scrollTop=0; document.body.style.overflow='hidden'; }
+function closeModal(){ document.getElementById('pModal').classList.remove('on'); document.body.style.overflow=''; }
+function openTour(k,plat){
+  const L=BUNDLE.listings[k]; const ph=photoList(k,plat); let html='';
+  const isV=plat==='vrbo', a=L.airbnb;
+  const groups=[];
+  if(!isV&&a.rooms.length>1){ a.rooms.forEach(r=>{ const ps=r.ids.map(id=>ph.findIndex(p=>p.id===id)).filter(i=>i>=0); if(ps.length) groups.push({t:r.t,h:r.h,ps}); });
+    const used=new Set(groups.flatMap(g=>g.ps)); const rest=ph.map((p,i)=>i).filter(i=>!used.has(i)); if(rest.length) groups.push({t:'Más fotos',h:[],ps:rest}); }
+  else groups.push({t:'',h:[],ps:ph.map((p,i)=>i)});
+  if(groups.length>1) html+=`<div class="tour-nav">${groups.map((g,gi)=>`<button data-g="${gi}"><img loading="lazy" src="${PIMG(ph[g.ps[0]].u,240)}" alt=""><span>${esc(g.t)}</span></button>`).join('')}</div>`;
+  html+=`<div class="tour">${groups.map((g,gi)=>`<div id="tg${gi}">${g.t?`<h4>${esc(g.t)}</h4>`:''}${g.h.length?`<div class="hl">${esc(g.h.join(' · '))}</div>`:''}<div class="ph">${g.ps.map((i,j)=>`<button data-ph="${i}" class="${j%3===0?'w':''}"><img loading="lazy" src="${PIMG(ph[i].u,960)}" alt="${esc(ph[i].c)}"></button>`).join('')}</div></div>`).join('')}</div>`;
+  openModal(`${P[k]} · ${ph.length} fotos (${isV?'VRBO':'Airbnb'})`,html);
+  const m=document.getElementById('pModal');
+  m.querySelectorAll('.tour [data-ph]').forEach(b=>b.onclick=()=>openLbx(ph,+b.dataset.ph));
+  m.querySelectorAll('.tour-nav [data-g]').forEach(b=>b.onclick=()=>{ const t=m.querySelector('#tg'+b.dataset.g); m.scrollTo({top:t.offsetTop-70,behavior:'smooth'}); });
+}
+function openLbx(list,i){ LBX={list,i}; const x=document.getElementById('pLbx'); x.classList.add('on'); document.body.style.overflow='hidden'; showLbx(); }
+function showLbx(){ const x=document.getElementById('pLbx'), p=LBX.list[LBX.i]; x.querySelector('img').src=PIMG(p.u,1440); x.querySelector('img').alt=p.c||''; x.querySelector('.cap').textContent=[p.room,p.c].filter(Boolean).join(' · '); x.querySelector('.ct').textContent=`${LBX.i+1} / ${LBX.list.length}`; }
+function stepLbx(d){ LBX.i=(LBX.i+d+LBX.list.length)%LBX.list.length; showLbx(); }
+function closeLbx(){ document.getElementById('pLbx').classList.remove('on'); if(!document.getElementById('pModal').classList.contains('on')) document.body.style.overflow=''; }
+function wireProps(){
+  document.getElementById('propList').addEventListener('click',e=>{ const c=e.target.closest('.pcard'); if(c) openProp(c.dataset.k,'airbnb'); });
+  const m=document.getElementById('pModal'); m.querySelector('.mh button').onclick=closeModal;
+  const x=document.getElementById('pLbx'); x.querySelector('.x').onclick=closeLbx; x.querySelector('.pv').onclick=()=>stepLbx(-1); x.querySelector('.nx').onclick=()=>stepLbx(1);
+  let sx=null; x.addEventListener('touchstart',e=>{sx=e.touches[0].clientX},{passive:true}); x.addEventListener('touchend',e=>{ if(sx==null) return; const dx=e.changedTouches[0].clientX-sx; if(Math.abs(dx)>50) stepLbx(dx<0?1:-1); sx=null; });
+  document.addEventListener('keydown',e=>{ if(x.classList.contains('on')){ if(e.key==='ArrowRight') stepLbx(1); if(e.key==='ArrowLeft') stepLbx(-1); if(e.key==='Escape') closeLbx(); return; } if(m.classList.contains('on')&&e.key==='Escape') closeModal(); });
 }
 
 /* ================= finanzas ================= */
