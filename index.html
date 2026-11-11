@@ -232,6 +232,26 @@ tr:hover td{background:var(--soft)}
 .badge.ok{color:var(--ok)} .badge.no{color:var(--warn)}
 .foot{color:var(--muted);font-size:12px;margin-top:14px}
 
+.heatwrap{overflow-x:auto}
+.heat{border-collapse:separate;border-spacing:3px;background:transparent;min-width:760px}
+.heat th,.heat td{border:0;padding:0;white-space:nowrap}
+.heat thead th{background:transparent;font-size:12px;color:var(--muted);font-weight:600;text-align:center;padding:2px 0 4px;cursor:default;position:static}
+.heat thead th.futh{font-style:italic}
+.heat tbody th{background:var(--panel);text-align:left;font-size:13.5px;font-weight:500;padding:0 12px 0 0;cursor:default;position:sticky;left:0;z-index:1}
+.heat tbody th .dot{margin-right:7px;vertical-align:middle}
+.heat tbody th small{display:block;font-size:11.5px;color:var(--muted);font-weight:400;margin-left:17px}
+.heat tr.fl-row th{font-weight:700;padding-top:6px}
+.heat tr.sub-row th{padding-left:16px;color:var(--muted)}
+.heat td.hc{width:58px;height:42px;text-align:center;border-radius:6px;background:var(--soft);font-variant-numeric:tabular-nums;vertical-align:middle;line-height:1.1}
+.heat td.hc b{font-size:13px;font-weight:600}
+.heat td.hc small{display:block;font-size:10px;opacity:.8;margin-top:1px}
+.heat tr.sub-row td.hc{height:30px}
+.heat tr.sub-row td.hc b{font-size:12px;font-weight:500}
+.heat td.fut{outline:1.5px dashed var(--line);outline-offset:-2px}
+.heat td.yr{width:66px;box-shadow:inset 0 0 0 2px var(--accent)}
+.heat td.zero{color:var(--muted)}
+.heat th.yr{color:var(--ink)}
+.heat tr:hover td{filter:none}
 /* detail sheet */
 #detail{position:fixed;right:20px;bottom:20px;width:350px;max-height:calc(100vh - 40px);overflow:auto;background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:0 16px 40px rgba(0,0,0,.2);padding:18px 20px;display:none;z-index:30}
 #detail.on{display:block;animation:pop .18s ease-out}
@@ -372,7 +392,7 @@ tr:hover td{background:var(--soft)}
       <div class="card"><h3>Ingresos por año (pago neto al anfitrión)</h3><div class="bars" id="revYear"></div></div>
       <div class="card"><h3>Tarifa promedio por noche (sin limpieza ni impuestos)</h3><div class="mtx"><table id="adrTbl"></table></div></div>
       <div class="card"><h3>Tarifas futuras por noche (Airbnb, noches disponibles)</h3><div class="mtx"><table id="rateTbl"></table></div><div class="note" style="margin-top:8px" id="rateNote"></div></div>
-      <div class="card"><h3 id="occT">Ocupación por mes</h3><div class="bars" id="byMonth"></div></div>
+      <div class="card"><h3 id="occT">Ocupación por mes</h3><div class="heatwrap" id="byMonth"></div><div class="note" id="occNote" style="margin-top:10px"></div></div>
       <div class="card"><h3>Posibles choques (misma unidad o unidad enlazada, fechas solapadas)</h3><ul class="warnlist" id="conf"></ul></div>
     </section>
 
@@ -730,14 +750,39 @@ function renderSum(){
   document.getElementById('rateTbl').innerHTML='<thead><tr><th>Mes</th>'+props.map(k=>`<th class="num">${P[k]}</th>`).join('')+'</tr></thead><tbody>'+months.map(m=>'<tr><td style="text-transform:capitalize">'+MES[+m.slice(5)-1]+' '+m.slice(0,4)+'</td>'+props.map(k=>{const v=Object.entries(DATA.rates[k]||{}).filter(([d,a])=>d>=tISO&&d.startsWith(m)&&a[1]&&a[0]).map(([d,a])=>a[0]);if(!v.length)return '<td class="num" style="color:var(--muted)">bloqueado / lleno</td>';const avg=v.reduce((s,x)=>s+x,0)/v.length;return `<td class="num">${money0(avg)} <span style="color:var(--muted);font-size:11px">(${Math.min(...v)}–${Math.max(...v)}, ${v.length} noches)</span></td>`;}).join('')+'</tr>').join('')+'</tbody>';
   document.getElementById('rateNote').textContent=`Precios de Airbnb actualizados ${ago(BUNDLE.pricesSync)}. Garita y Los Balcones salen bloqueadas casi todo el año porque están enlazadas a Las Arcadas.`;
   document.getElementById('leg1').innerHTML=props.map(k=>`<span class="tag"><span class="dot" style="background:${COLOR(k)}"></span>${P[k]}</span>`).join('');
-  const oy=yr||TODAY.getFullYear(); document.getElementById('occT').textContent='Ocupación por mes – '+oy+' (por unidad)';
-  let html='';
-  for(let m=0;m<12;m++){ const a=oy+'-'+String(m+1).padStart(2,'0')+'-01'; const b=m===11?(oy+1)+'-01-01':oy+'-'+String(m+2).padStart(2,'0')+'-01';
-    const days=new Date(oy,m+1,0).getDate();
-    const occ=props.map(k=>{ const set=new Set(); rs.filter(r=>r.prop===k).forEach(r=>{ let d=r.ci>a?r.ci:a; const e=r.co<b?r.co:b; while(d<e){ set.add(d); d=addD(d,1);} }); return [k,set.size/days]; });
-    html+=`<div style="text-transform:capitalize">${MES[m]}</div><div style="display:grid;gap:2px">${occ.map(([k,v])=>`<div class="track" title="${P[k]}: ${(v*100).toFixed(0)}%"><span style="width:${v*100}%;background:${COLOR(k)}"></span></div>`).join('')}</div><div style="text-align:right;font-size:12px;color:var(--muted)">${occ.map(([k,v])=>(v*100).toFixed(0)+'%').join('<br>')}</div>`;
-  }
+  const oy=yr||TODAY.getFullYear(); document.getElementById('occT').textContent='Ocupación por mes – '+oy;
+  const occU=(keys,a,b)=>{ const set=new Set(); rs.filter(r=>keys.includes(r.prop)).forEach(r=>{ let d=r.ci>a?r.ci:a; const e=r.co<b?r.co:b; while(d<e){ set.add(d); d=addD(d,1);} }); return set.size/Math.max(1,Math.round((dt(b)-dt(a))/864e5)); };
+  const mRange=(y,m)=>[y+'-'+String(m+1).padStart(2,'0')+'-01', m===11?(y+1)+'-01-01':y+'-'+String(m+2).padStart(2,'0')+'-01'];
+  const curM=TODAY.getFullYear()*12+TODAY.getMonth();
+  const ROWS=[
+    {lab:'2do piso',sub:'cualquier parte ocupada',keys:['LA','GS','LB'],floor:true,color:'LA'},
+    {lab:'Las Arcadas completa',keys:['LA'],ind:true,color:'LA'},
+    {lab:'Garita Suite',keys:['GS'],ind:true,color:'GS'},
+    {lab:'Los Balcones Suites',keys:['LB'],ind:true,color:'LB'},
+    {lab:'3er piso',sub:'Vista Bahía Suite',keys:['VB'],floor:true,color:'VB'}
+  ].filter(x=>x.floor||x.keys.some(k=>state.props.has(k)));
+  const hex=h=>{h=h.trim().replace('#','');if(h.length===3)h=h.split('').map(c=>c+c).join('');return [0,2,4].map(i=>parseInt(h.slice(i,i+2),16));};
+  const cs=getComputedStyle(document.documentElement), A=hex(cs.getPropertyValue('--accent')), PN=hex(cs.getPropertyValue('--panel')), IK=hex(cs.getPropertyValue('--ink'));
+  const lum=c=>{const f=x=>{x/=255;return x<=.03928?x/12.92:Math.pow((x+.055)/1.055,2.4)};return .2126*f(c[0])+.7152*f(c[1])+.0722*f(c[2]);};
+  const con=(a,b)=>{const x=lum(a),y=lum(b);return (Math.max(x,y)+.05)/(Math.min(x,y)+.05);};
+  const cell=(v,prev,fut,title)=>{ const pct=Math.round(v*100);
+    let style='';
+    if(v>0){ const t=.1+.9*Math.min(1,v); const c=A.map((a,i)=>Math.round(PN[i]+(a-PN[i])*t)); const txt=con(c,IK)>=con(c,PN)?IK:PN;
+      style=`background:rgb(${c});color:rgb(${txt})`; }
+    const dl=prev!=null&&!fut?Math.round((v-prev)*100):null;
+    return `<td class="hc${fut?' fut':''}${v>0?'':' zero'}" style="${style}" title="${title}${prev!=null?` · año anterior ${Math.round(prev*100)}%`:''}${fut?' · reservado hasta hoy':''}"><b>${v>0?pct+'%':'–'}</b>${dl!=null&&dl!==0?`<small>${dl>0?'▲':'▼'}${Math.abs(dl)}</small>`:''}</td>`; };
+  let html='<table class="heat"><thead><tr><th></th>'+MESc.map((m,i)=>`<th class="${oy*12+i>curM?'futh':''}">${m}</th>`).join('')+'<th class="yr">Año</th></tr></thead><tbody>';
+  ROWS.forEach(row=>{
+    html+=`<tr class="${row.floor?'fl-row':'sub-row'}"><th><span class="dot" style="background:${COLOR(row.color)}"></span>${row.lab}${row.sub?`<small>${row.sub}</small>`:''}</th>`;
+    for(let m=0;m<12;m++){ const [a,b]=mRange(oy,m), [pa,pb]=mRange(oy-1,m); const v=occU(row.keys,a,b); const pv=row.floor?occU(row.keys,pa,pb):null;
+      html+=cell(v,pv,oy*12+m>curM,`${row.lab} · ${MES[m]} ${oy}: ${Math.round(v*100)}%`); }
+    const yv=occU(row.keys,oy+'-01-01',(oy+1)+'-01-01'), ypv=row.floor?occU(row.keys,(oy-1)+'-01-01',oy+'-01-01'):null;
+    html+=cell(yv,oy>=TODAY.getFullYear()?null:ypv,false,`${row.lab} · todo ${oy}: ${Math.round(yv*100)}%`).replace('class="hc','class="hc yr');
+    html+='</tr>';
+  });
+  html+='</tbody></table>';
   document.getElementById('byMonth').innerHTML=html;
+  document.getElementById('occNote').innerHTML=`Porcentaje de noches ocupadas en el mes. Más oscuro = más ocupado. ▲▼ = puntos de diferencia contra el mismo mes de ${oy-1} (solo por piso). Los meses con borde punteado son futuros: muestran lo reservado hasta hoy.`;
   // choques: misma unidad en dos plataformas, o Las Arcadas vs una de sus partes
   const act=R.filter(active); const conf=[]; const linked=(a,b)=>a===b||PARENT[a]===b||PARENT[b]===a;
   for(let i=0;i<act.length;i++)for(let j=i+1;j<act.length;j++){ const a=act[i],b=act[j];
