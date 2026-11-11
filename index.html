@@ -83,42 +83,51 @@ main{padding:28px 32px 60px;max-width:1360px;width:100%;margin:0 auto;min-width:
 .panel>h3{font-size:17px;margin-bottom:14px;display:flex;align-items:baseline;gap:10px}
 .panel>h3 small{font-family:var(--body);font-weight:500;color:var(--muted);font-size:13px}
 
-/* the building — ilustración real de la fachada con capas interactivas */
-.bldg{display:grid;grid-template-columns:minmax(200px,250px) 1fr;column-gap:24px;align-items:start}
-.fx{position:sticky;top:12px;margin:0;perspective:900px;-webkit-tap-highlight-color:transparent}
-.fx-card{position:relative;aspect-ratio:1792/2400;border-radius:12px;overflow:hidden;transform-style:preserve-3d;transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .5s cubic-bezier(.2,.7,.2,1),box-shadow .5s ease;box-shadow:0 1px 2px rgba(0,0,0,.06),0 14px 30px -12px rgba(31,78,95,.35);background:var(--soft);animation:fxIn .9s cubic-bezier(.2,.7,.2,1) both}
-.fx.tilting .fx-card{transition:transform .12s linear,box-shadow .3s ease;box-shadow:0 2px 4px rgba(0,0,0,.08),0 26px 44px -16px rgba(31,78,95,.45)}
-.fx-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;user-select:none;-webkit-user-drag:none}
-.fx-sheen{position:absolute;inset:0;pointer-events:none;background:radial-gradient(120% 70% at var(--gx,30%) var(--gy,0%),rgba(255,255,255,.22),transparent 55%);opacity:0;transition:opacity .4s}
-.fx.tilting .fx-sheen{opacity:1}
-.fx-dusk{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(40,52,110,.42),rgba(60,58,100,.16) 50%,rgba(30,26,46,.24));mix-blend-mode:multiply;opacity:0;transition:opacity 1.2s ease}
+/* the building — fachada en capas de profundidad (siempre de frente) */
+.bldg{display:grid;grid-template-columns:minmax(210px,260px) 1fr;column-gap:24px;align-items:start}
+.fx{position:sticky;top:12px;margin:0;--px:0;--py:0;-webkit-tap-highlight-color:transparent}
+.fx-stage{position:relative;aspect-ratio:1792/2400;border-radius:12px;overflow:hidden;background:linear-gradient(180deg,#d6ecfb 0%,#e9f5fd 45%,#f4f9fc 100%);box-shadow:0 1px 2px rgba(0,0,0,.06),0 16px 32px -14px rgba(31,78,95,.4);animation:fxIn .9s cubic-bezier(.2,.7,.2,1) both;isolation:isolate}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .fx-stage{background:linear-gradient(180deg,#2b3a55,#3a4560 55%,#4a4d5e)} }
+.fx-sky{position:absolute;inset:-6%;background:radial-gradient(60% 30% at 25% 8%,rgba(255,255,255,.7),transparent 70%),radial-gradient(50% 25% at 80% 14%,rgba(255,255,255,.5),transparent 70%);transform:translate3d(calc(var(--px)*-5px),calc(var(--py)*-3px),0)}
+.ly{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;user-select:none;-webkit-user-drag:none;
+  transform:translate3d(calc(var(--px)*var(--k)*13px),calc(var(--py)*var(--k)*7px),0);will-change:transform}
+.ly.cast{filter:drop-shadow(calc(var(--px)*var(--k)*-9px + var(--k)*2px) calc(var(--py)*var(--k)*-5px + var(--k)*5px) calc(var(--k)*5px) rgba(48,30,8,.42))}
+.fx-dusk{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(40,52,110,.36),rgba(60,58,100,.12) 50%,rgba(30,26,46,.2));mix-blend-mode:multiply;opacity:0;transition:opacity 1.2s ease}
 .fx.night .fx-dusk{opacity:1}
-/* pisos */
-.fz{position:absolute;left:var(--x);top:var(--y);width:var(--w);height:var(--h);border:0;padding:0;margin:0;background:transparent;cursor:pointer;border-radius:6px;transition:background .35s ease,box-shadow .35s ease,opacity .35s ease}
-.fz::after{content:attr(data-label);position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(.92);white-space:nowrap;font:600 11px/1 var(--body);letter-spacing:.02em;color:#fff;background:rgba(20,28,34,.78);padding:6px 9px;border-radius:999px;opacity:0;transition:opacity .25s ease,transform .25s ease;pointer-events:none;backdrop-filter:blur(4px)}
-.fz:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.fx.has-hi .fz:not(.hi){background:rgba(10,14,20,.38)}
-.fz.hi{box-shadow:inset 0 0 0 2px var(--c,#fff),0 0 0 999px rgba(0,0,0,0)}
-.fz.hi::after{opacity:1;transform:translate(-50%,-50%) scale(1)}
-.fz.ground{cursor:default}
-.fz.ground.hi{box-shadow:inset 0 0 0 2px rgba(255,255,255,.7)}
-/* ventanas y faroles */
-.gl{position:absolute;left:var(--x);top:var(--y);width:var(--w);height:var(--h);pointer-events:none;border-radius:3px;opacity:0;transform:translateZ(18px);transition:opacity .6s ease}
-.gl.on{opacity:1;background:radial-gradient(ellipse at 50% 55%,color-mix(in srgb,var(--c) 30%,#ffd98a) 0%,color-mix(in srgb,var(--c) 75%,transparent) 55%,transparent 100%);mix-blend-mode:screen;box-shadow:0 0 18px 4px color-mix(in srgb,var(--c) 55%,transparent);animation:glowOn .9s ease both,breathe 4.5s ease-in-out 1s infinite}
+/* luces */
+.gl{position:absolute;left:var(--x);top:var(--y);width:var(--w);height:var(--h);pointer-events:none;border-radius:3px;opacity:0;transition:opacity .5s ease}
+.gl.on{opacity:1;background:radial-gradient(ellipse at 50% 55%,color-mix(in srgb,var(--c) 30%,#ffd98a) 0%,color-mix(in srgb,var(--c) 75%,transparent) 55%,transparent 100%);mix-blend-mode:screen;box-shadow:0 0 18px 4px color-mix(in srgb,var(--c) 55%,transparent);animation:glowOn .9s ease both}
 .gl.blk{opacity:1;background:repeating-linear-gradient(45deg,rgba(90,90,100,.55) 0 3px,transparent 3px 7px);mix-blend-mode:multiply}
-.lamp{position:absolute;left:var(--x);top:var(--y);width:7%;aspect-ratio:1;transform:translate(-50%,-50%) translateZ(10px);border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(255,214,130,.95),rgba(255,190,90,.35) 40%,transparent 70%);mix-blend-mode:screen;opacity:0;transition:opacity 1.2s ease}
-.fx.night .lamp{opacity:1;animation:flick 6s ease-in-out infinite}
+.warm{position:absolute;pointer-events:none;opacity:0;transition:opacity .45s ease;mix-blend-mode:screen}
+.warm.win{left:var(--x);top:var(--y);width:var(--w);height:var(--h);border-radius:3px;background:radial-gradient(ellipse at 50% 60%,rgba(255,226,150,.95),rgba(255,180,80,.55) 55%,transparent 100%);box-shadow:0 0 16px 3px rgba(255,190,90,.45)}
+.warm.pool{left:var(--x);top:var(--y);width:22%;height:20%;transform:translateX(-50%);background:radial-gradient(50% 60% at 50% 0%,rgba(255,215,140,.75),rgba(255,190,100,.25) 55%,transparent 75%)}
+.warm.bulb,.warm.lamp{left:var(--x);top:var(--y);width:var(--s,6%);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,#fff6d8 0 12%,rgba(255,206,120,.9) 22%,rgba(255,180,80,.35) 45%,transparent 70%)}
+.fx.f2 .warm.l2,.fx.f3 .warm.l3{opacity:1}
+.fx.f2 .warm.l2:nth-child(odd){transition-delay:.06s}
+.fx.night .warm.lamp{opacity:.85}
+/* contorno de cada propiedad */
+.fx-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.fz{fill:transparent;stroke:none;cursor:pointer;pointer-events:all;transition:fill .35s ease;outline:none}
+.fz path{pointer-events:all}
+.fz .edge{fill:transparent;stroke:var(--c);stroke-width:.75;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:0;transition:stroke-dashoffset .9s cubic-bezier(.4,.1,.2,1),opacity .2s ease;filter:drop-shadow(0 0 3px var(--c))}
+.fx.f2 .fz[data-f="2"] .edge,.fx.f3 .fz[data-f="3"] .edge{stroke-dashoffset:0;opacity:1}
+.fx.f2 .fz[data-f="2"] .tint,.fx.f3 .fz[data-f="3"] .tint{fill:color-mix(in srgb,var(--c) 10%,transparent)}
+.fz .tint{fill:transparent;stroke:none;transition:fill .35s ease}
+.fz:focus-visible .edge{stroke-dashoffset:0;opacity:1}
+.fx-tag{position:absolute;left:50%;top:var(--t);transform:translate(-50%,-50%) scale(.92);white-space:nowrap;font:600 11px/1 var(--body);letter-spacing:.02em;color:#fff;background:rgba(20,28,34,.8);padding:6px 10px;border-radius:999px;opacity:0;transition:opacity .25s ease,transform .25s ease;pointer-events:none;backdrop-filter:blur(4px)}
+.fx-tag::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--c);margin-right:6px;vertical-align:0}
+.fx.f2 .fx-tag[data-f="2"],.fx.f3 .fx-tag[data-f="3"]{opacity:1;transform:translate(-50%,-50%) scale(1)}
 .fx-cap{display:flex;flex-wrap:wrap;gap:4px 10px;margin-top:10px;font-size:11.5px;color:var(--muted);justify-content:center}
 .fx-cap .dot{width:8px;height:8px;margin-right:4px;vertical-align:1px}
 @keyframes fxIn{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1}}
 @keyframes glowOn{0%{opacity:0}35%{opacity:.85}45%{opacity:.4}100%{opacity:1}}
-@keyframes breathe{0%,100%{filter:brightness(1)}50%{filter:brightness(1.18)}}
-@keyframes flick{0%,100%{opacity:1}47%{opacity:.86}50%{opacity:.97}53%{opacity:.9}}
+@media (prefers-reduced-motion:reduce){ .ly,.fx-sky{transform:none!important} }
 /* filas de información */
 .rows{min-width:0}
 .fl .info{padding:12px 10px 14px;margin:0 -10px;border-top:1px solid var(--line);border-radius:10px;min-width:0;transition:background .3s ease;cursor:default}
 .fl:first-child .info{border-top-color:transparent}
 .fl.hi .info{background:color-mix(in srgb,var(--c) 9%,transparent)}
+.fl[data-f]{cursor:pointer}
 .fl .info .unit h4{transition:color .3s}
 .fl.hi .info .unit h4{color:color-mix(in srgb,var(--c) 70%,var(--ink))}
 .ground .info{color:var(--muted)}
@@ -596,26 +605,45 @@ function renderBuilding(){
   const occN=[laR||gsR||lbR,vb.r].filter(Boolean).length;
   document.getElementById('bSub').textContent=occN===0?'todo libre':occN===2?'los dos pisos ocupados':'un piso ocupado';
   const lbl=`<div class="strip-l"><span>hoy</span><span>${fmtS(addD(tISO,13))}</span></div>`;
-  // ventanas: % sobre la ilustración (1792×2400)
   const box=(x,y,w,h)=>`--x:${x}%;--y:${y}%;--w:${w}%;--h:${h}%`;
   const win=(pos,k,on,blk)=>`<span class="gl${on?' on':blk?' blk':''}" style="${pos}${k?`;--c:var(--${k})`:''}"></span>`;
   const g2=k=>laR?['LA',true]:k==='GS'?['GS',!!gsR]:['LB',!!lbR];
   const blk2=!laR&&!gsR&&!lbR&&!!la.blk;
   const [cL,oL]=g2('GS'),[cR,oR]=g2('LB');
   const night=(h=>h>=18||h<6)(new Date().getHours());
-  const lamps=[[8.6,17.7],[64,17.6],[66.1,15.4],[85.4,15.4],[92,17.7],[34.6,73.6],[65.5,73.6]].map(([x,y],i)=>`<span class="lamp" style="--x:${x}%;--y:${y}%;animation-delay:${i*.7}s"></span>`).join('');
+  const W2=[box(16.2,40.4,12,14),box(44.2,40.4,12,14),box(72.2,40.4,12,14)];
+  const W3=[box(71.6,13.4,9.2,9.6),box(53.4,15,5.4,4.8)];
+  const yv=y=>(y*2400/1792).toFixed(2); const poly=pts=>'M'+pts.map(([x,y])=>`${x} ${yv(y)}`).join('L')+'Z';
+  const p2=poly([[2.2,25.9],[97.8,25.9],[97.8,29.8],[95.6,29.8],[95.6,55.3],[96.6,55.3],[96.6,61.7],[3.4,61.7],[3.4,55.3],[4.4,55.3],[4.4,29.8],[2.2,29.8]]);
+  const p3=poly([[5.6,25.6],[5.6,18.3],[8.4,18.3],[8.4,5.6],[45.6,5.6],[45.6,18.3],[47.2,18.3],[47.2,3.7],[88.6,3.7],[88.6,7],[92.6,7],[92.6,18.3],[94.4,18.3],[94.4,25.6]]);
+  const lamps3=[[8.6,17.7],[64,17.6],[66.1,15.4],[85.4,15.4],[92,17.7]].map(([x,y])=>`<span class="warm lamp l3" style="--x:${x}%;--y:${y}%"></span>`).join('');
+  const string3=Array.from({length:9},(_,i)=>`<span class="warm bulb l3" style="--x:${11+i*4.2}%;--y:${7.6+Math.sin(i*.8)*.5}%;--s:3.4%"></span>`).join('');
+  const pools2=[22,50,78].map(x=>`<span class="warm pool l2" style="--x:${x}%;--y:33.5%"></span>`).join('');
+  const bulbs2=[22,50,78].map(x=>`<span class="warm bulb l2" style="--x:${x}%;--y:34.2%;--s:4.2%"></span>`).join('');
   document.getElementById('bldg').innerHTML=`
    <figure class="fx${night?' night':''}" id="fx">
-     <div class="fx-card">
-       <picture><source srcset="fachada.webp" type="image/webp"><img src="fachada.jpg" width="1792" height="2400" alt="Fachada del edificio: Vista Bahía en el tercer piso, Las Arcadas con su balcón en el segundo y el restaurante en el primero" draggable="false"></picture>
+     <div class="fx-stage">
+       <div class="fx-sky"></div>
+       <img class="ly" style="--k:0" src="L/cuerpo.webp" alt="Fachada: Vista Bahía en el tercer piso, Las Arcadas con su balcón en el segundo y el restaurante en el primero" draggable="false">
+       <div class="ly" style="--k:0">
+         ${win(W3[0],'VB',!!vb.r,vb.blk)}${win(W3[1],'VB',!!vb.r,vb.blk)}
+         ${win(W2[0],cL,oL,blk2)}${win(W2[1],cR,oR,blk2)}${win(W2[2],cR,oR,blk2)}
+         ${W2.map(b=>`<span class="warm win l2" style="${b}"></span>`).join('')}${W3.map(b=>`<span class="warm win l3" style="${b}"></span>`).join('')}
+         ${pools2}
+       </div>
+       <img class="ly cast" style="--k:.4" src="L/pergola.webp" alt="" draggable="false">
+       <div class="ly" style="--k:.4">${string3}</div>
+       <img class="ly cast" style="--k:.6" src="L/baranda.webp" alt="" draggable="false">
+       <div class="ly" style="--k:.6">${lamps3}</div>
+       <img class="ly cast" style="--k:1" src="L/balcon.webp" alt="" draggable="false">
+       <div class="ly" style="--k:1">${bulbs2}</div>
        <div class="fx-dusk"></div>
-       ${win(box(71.6,13.4,9.2,9.6),'VB',!!vb.r,vb.blk)}${win(box(53.4,15,5.4,4.8),'VB',!!vb.r,vb.blk)}
-       ${win(box(16.2,40.4,12,14),cL,oL,blk2)}${win(box(44.2,40.4,12,14),cR,oR,blk2)}${win(box(72.2,40.4,12,14),cR,oR,blk2)}
-       ${lamps}
-       <button type="button" class="fz" data-f="3" data-label="3er piso · ${esc(P.VB)}" aria-label="3er piso, ${esc(P.VB)}" style="${box(5,3,90,23)};--c:var(--VB)"></button>
-       <button type="button" class="fz" data-f="2" data-label="2do piso · ${esc(P.LA)}" aria-label="2do piso, ${esc(P.LA)}" style="${box(2.5,26,95,35)};--c:var(--LA)"></button>
-       <button type="button" class="fz ground" data-f="1" data-label="1er piso · Bari (no es nuestro)" aria-label="1er piso, restaurante, no es parte de las reservas" style="${box(2.5,61,95,36)}"></button>
-       <div class="fx-sheen"></div>
+       <svg class="fx-svg ly" style="--k:.8" viewBox="0 0 100 ${yv(100)}" preserveAspectRatio="none">
+         <g class="fz" data-f="3" tabindex="0" role="button" aria-label="3er piso, ${esc(P.VB)}" style="--c:var(--VB)"><path class="tint" d="${p3}"/><path class="edge" pathLength="1" d="${p3}"/></g>
+         <g class="fz" data-f="2" tabindex="0" role="button" aria-label="2do piso, ${esc(P.LA)}" style="--c:var(--LA)"><path class="tint" d="${p2}"/><path class="edge" pathLength="1" d="${p2}"/></g>
+       </svg>
+       <span class="fx-tag" data-f="3" style="--t:2.2%;--c:var(--VB)">3er piso · ${esc(P.VB)}</span>
+       <span class="fx-tag" data-f="2" style="--t:64.5%;--c:var(--LA)">2do piso · ${esc(P.LA)}</span>
      </div>
      <figcaption class="fx-cap"><span><span class="dot" style="background:var(--VB)"></span>Vista Bahía</span><span><span class="dot" style="background:var(--LA)"></span>Las Arcadas</span><span><span class="dot" style="background:var(--GS)"></span>Garita</span><span><span class="dot" style="background:var(--LB)"></span>Los Balcones</span></figcaption>
    </figure>
@@ -630,7 +658,7 @@ function renderBuilding(){
        <div class="part"><span><span class="dot" style="background:var(--GS)"></span>${P.GS}</span><div><div class="state" style="margin:0 0 3px">${gs.pill} ${gs.r?gs.txt:''}</div>${strip('GS')}</div></div>
        <div class="part"><span><span class="dot" style="background:var(--LB)"></span>${P.LB}</span><div><div class="state" style="margin:0 0 3px">${lb.pill} ${lb.r?lb.txt:''}</div>${strip('LB')}</div></div>
      </div></div></div>
-   <div class="fl ground" data-f="1">
+   <div class="fl ground">
      <div class="info"><div class="unit"><h4 style="font-weight:500">Bari Handcrafted Pizza</h4><span class="fln">1er piso</span></div><div class="state">Restaurante del primer piso. No es parte de las reservas.</div></div></div>
    </div>`;
   wireBuilding();
@@ -639,27 +667,30 @@ let _bWired=false;
 function wireBuilding(){
   if(_bWired) return; _bWired=true;
   const host=document.getElementById('bldg');
-  const hi=f=>{ const fx=host.querySelector('.fx'); if(!fx) return;
-    host.querySelectorAll('.fz,.fl').forEach(e=>e.classList.toggle('hi',!!f&&e.dataset.f===f));
-    fx.classList.toggle('has-hi',!!f); };
-  let pinned=null;
-  host.addEventListener('pointerover',e=>{ if(e.pointerType==='touch') return; const t=e.target.closest('.fz,.fl'); if(t) hi(t.dataset.f); });
-  host.addEventListener('pointerleave',()=>hi(pinned));
-  host.addEventListener('pointerout',e=>{ if(e.pointerType==='touch') return; if(!e.relatedTarget||!host.contains(e.relatedTarget)) hi(pinned); });
-  host.addEventListener('click',e=>{ const z=e.target.closest('.fz'); const row=e.target.closest('.fl');
-    const t=z||row; if(!t) return; if(row&&e.target.closest('i,button:not(.fz),a')) return;
-    pinned=pinned===t.dataset.f?null:t.dataset.f; hi(pinned);
-    if(z&&pinned){ const r=host.querySelector(`.fl[data-f="${pinned}"]`); const b=r&&r.getBoundingClientRect(); if(b&&(b.top<0||b.bottom>innerHeight)) r.scrollIntoView({behavior:'smooth',block:'center'}); } });
-  // profundidad: la fachada se inclina con el mouse
-  const still=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let raf=0;
-  host.addEventListener('pointermove',e=>{ if(still||e.pointerType!=='mouse') return; const fx=e.target.closest('.fx'); if(!fx) return;
-    const c=fx.querySelector('.fx-card'), b=c.getBoundingClientRect(); const px=(e.clientX-b.left)/b.width, py=(e.clientY-b.top)/b.height;
-    cancelAnimationFrame(raf); raf=requestAnimationFrame(()=>{ fx.classList.add('tilting');
-      c.style.setProperty('--ry',((px-.5)*12).toFixed(2)+'deg'); c.style.setProperty('--rx',((.5-py)*9).toFixed(2)+'deg');
-      fx.style.setProperty('--gx',(px*100).toFixed(1)+'%'); fx.style.setProperty('--gy',(py*100).toFixed(1)+'%'); }); });
-  host.addEventListener('pointerout',e=>{ const fx=host.querySelector('.fx'); if(!fx||e.pointerType!=='mouse') return; if(e.relatedTarget&&fx.contains(e.relatedTarget)) return;
-    cancelAnimationFrame(raf); fx.classList.remove('tilting'); const c=fx.querySelector('.fx-card'); c.style.setProperty('--rx','0deg'); c.style.setProperty('--ry','0deg'); });
+  let pinned=null, hover=null;
+  const apply=()=>{ const f=hover||pinned; const fx=host.querySelector('.fx'); if(!fx) return;
+    fx.classList.toggle('f2',f==='2'); fx.classList.toggle('f3',f==='3');
+    host.querySelectorAll('.fl[data-f]').forEach(e=>e.classList.toggle('hi',e.dataset.f===f)); };
+  const target=e=>e.target.closest&&e.target.closest('.fz,.fl[data-f]');
+  host.addEventListener('pointerover',e=>{ if(e.pointerType==='touch') return; const t=target(e); hover=t?t.dataset.f:null; apply(); });
+  host.addEventListener('pointerleave',()=>{ hover=null; apply(); });
+  host.addEventListener('click',e=>{ const t=target(e); if(!t) return; if(t.classList.contains('fl')&&e.target.closest('i,a,button')) return;
+    pinned=pinned===t.dataset.f?null:t.dataset.f; apply();
+    if(t.classList.contains('fz')&&pinned&&matchMedia('(max-width:640px)').matches){ const r=host.querySelector(`.fl[data-f="${pinned}"]`); r&&r.scrollIntoView({behavior:'smooth',block:'center'}); } });
+  host.addEventListener('keydown',e=>{ const t=e.target.closest&&e.target.closest('.fz'); if(t&&(e.key==='Enter'||e.key===' ')){ e.preventDefault(); pinned=pinned===t.dataset.f?null:t.dataset.f; apply(); } });
+  // profundidad: punto de vista según el cursor; en reposo, un vaivén lento
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  let tx=0,ty=0,cx=0,cy=0,last=-1e9;
+  window.addEventListener('pointermove',e=>{ if(e.pointerType!=='mouse') return; const fx=host.querySelector('.fx'); if(!fx||!fx.offsetParent) return;
+    const b=fx.getBoundingClientRect(); const mx=b.left+b.width/2, my=b.top+b.height/2;
+    const nx=(e.clientX-mx)/(b.width*1.6), ny=(e.clientY-my)/(b.height*1.2);
+    if(Math.abs(nx)>1.6||Math.abs(ny)>1.6) return;
+    tx=Math.max(-1,Math.min(1,nx)); ty=Math.max(-1,Math.min(1,ny)); last=performance.now(); },{passive:true});
+  const tick=t=>{ const fx=host.querySelector('.fx');
+    if(fx&&fx.offsetParent){ if(t-last>2500){ tx=Math.sin(t/2600)*.55; ty=Math.sin(t/3700)*.3; }
+      cx+=(tx-cx)*.08; cy+=(ty-cy)*.08; fx.style.setProperty('--px',cx.toFixed(3)); fx.style.setProperty('--py',cy.toFixed(3)); }
+    requestAnimationFrame(tick); };
+  requestAnimationFrame(tick);
 }
 const svgIn='<svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>', svgOut='<svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>';
 function renderWeek(){
