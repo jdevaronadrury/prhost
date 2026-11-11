@@ -481,6 +481,24 @@ tr:hover td{background:var(--soft)}
 }
 .mobile-sync{display:none;align-items:center;gap:8px;font-size:13px;color:var(--muted);margin:-12px 0 16px}
 @media (prefers-reduced-motion:reduce){ *{animation:none!important;transition:none!important} }
+/* CONTROL de equipos */
+nav button[hidden]{display:none}
+.ctl-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-bottom:16px}
+.ctl-grid .panel h3{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.ctl-row{display:flex;align-items:center;gap:12px;padding:11px 0;border-top:1px solid var(--line)}
+.ctl-row:first-of-type{border-top:0}
+.ctl-dot{width:11px;height:11px;border-radius:50%;background:var(--muted);opacity:.45;flex:none}
+.ctl-dot.on{background:var(--ok);opacity:1;box-shadow:0 0 0 4px color-mix(in srgb,var(--ok) 18%,transparent)}
+.ctl-dot.unk{background:var(--amber);opacity:1}
+.ctl-nm{flex:1;min-width:0}.ctl-nm b{display:block;font-weight:600}.ctl-nm small{color:var(--muted);font-size:12.5px}
+.ctl-btn{min-width:92px}.ctl-btn.go{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.ctl-btn:disabled{opacity:.5;cursor:default}
+.ctl-lock{color:var(--muted);font-size:12px;text-align:right;max-width:170px}
+.ctl-plan div{display:flex;gap:12px;padding:6px 0;font-size:14px;border-top:1px solid var(--line)}.ctl-plan div:first-child{border-top:0}
+.ctl-plan time{color:var(--muted);min-width:128px;flex:none}
+.ctl-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.ctl-msg{min-height:20px;font-size:13.5px;color:var(--muted);margin:0 0 12px}.ctl-msg.err{color:var(--warn)}
+.ctl-paused{background:color-mix(in srgb,var(--amber) 14%,transparent);color:var(--amber);border-radius:var(--r-md);padding:10px 14px;margin-bottom:14px;font-weight:600}
 </style>
 </head>
 <body>
@@ -508,6 +526,7 @@ tr:hover td{background:var(--soft)}
       <button data-v="hist"><svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>Reservas</button>
       <button data-v="sum"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Resumen</button>
       <button data-v="fin"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 6.5c0-1.9-2.2-3-5-3s-5 1.3-5 3.3c0 4.7 10 2.4 10 7.2 0 2-2.2 3.5-5 3.5s-5-1.2-5-3"/></svg>Finanzas</button>
+      <button data-v="ctl" id="navCtl" hidden><svg viewBox="0 0 24 24"><path d="M12 2v10"/><path d="M18.4 6.6a9 9 0 1 1-12.8 0"/></svg>Control</button>
     </nav>
     <div class="syncbox" id="syncbox"></div>
   </aside>
@@ -588,6 +607,20 @@ tr:hover td{background:var(--soft)}
       <div class="card"><h3 id="occT">Ocupación mes a mes</h3><p class="note" style="margin:-6px 0 14px">Qué tan lleno estuvo cada piso cada mes. La rayita negra es el mismo mes del año anterior. Las barras rayadas son meses futuros: solo lo reservado hasta hoy.</p><div class="occ2" id="occBars"></div></div>
       <div class="card"><h3 id="ygT">El año en noches</h3><p class="note" style="margin:-6px 0 12px">Cada cuadrito es una noche. Color = unidad ocupada esa noche. Gris = libre. Rayado = bloqueado. Pasa el dedo o el ratón por encima para ver el huésped.</p><div id="yearGrid"></div><div class="legend" id="ygLeg"></div></div>
       <div class="card"><h3>Posibles choques (misma unidad o unidad enlazada, fechas solapadas)</h3><ul class="warnlist" id="conf"></ul></div>
+    </section>
+
+    <!-- CONTROL DE EQUIPOS -->
+    <section class="view" id="v-ctl">
+      <div class="vhead"><h2>Control de equipos</h2><span class="sub" id="ctlSub">Neveras, aires y calentador según las reservas</span></div>
+      <div class="tools ctl-bar">
+        <select id="ctlWho" class="btn" aria-label="Quién eres"><option value="">¿Quién eres?</option><option>José</option><option>Papá</option><option>Julio</option></select>
+        <button class="btn" id="ctlRef">Actualizar</button>
+        <button class="btn" id="ctlPause">Pausar automático</button>
+      </div>
+      <div class="ctl-msg" id="ctlMsg"></div>
+      <div id="ctlPaused"></div>
+      <div class="ctl-grid" id="ctlGrid"></div>
+      <div class="panel ctl-plan"><h3>Próximas acciones automáticas <small>prende 11:00 a. m. el día de llegada · apaga 12:00 p. m. si queda vacío</small></h3><div id="ctlPlan"></div></div>
     </section>
 
     <!-- FINANZAS -->
@@ -1086,11 +1119,71 @@ function renderViews(){ buildFilters(); renderCal(); renderHist(); renderSum(); 
 function renderAll(){ renderHome(); renderViews(); try{ renderProps(); }catch(e){ console.error(e); } try{ if(BUNDLE.fin&&BUNDLE.econ) renderEcon(); }catch(e){ console.error(e); }
   document.getElementById('srcnote').textContent=`${R.length} reservas desde nov 2020 · Airbnb y VRBO · reservas por calendario iCal cada 30 min, precios y pagos una vez al día.`; }
 
+/* ===== CONTROL de equipos (La Bestia vía control.macrologicpr.com; la llave viene cifrada en el paquete) ===== */
+let CTL=null, CTL_BUSY=false;
+const CTL_PISO={'2':'Las Arcadas · 2do piso','3':'Vista Bahía · 3er piso','agua':'Agua del edificio · 2do y 3er piso'};
+function ctlCfg(){ return BUNDLE&&BUNDLE.control&&BUNDLE.control.url&&BUNDLE.control.token?BUNDLE.control:null; }
+function ctlMsg(t,err){ const m=document.getElementById('ctlMsg'); m.textContent=t||''; m.className='ctl-msg'+(err?' err':''); }
+function ctlWho(){ try{ return localStorage.getItem('prh_who')||''; }catch(e){ return ''; } }
+function ctlFmt(s){ return new Date(s).toLocaleString('es-PR',{weekday:'short',day:'numeric',month:'short',hour:'numeric',minute:'2-digit'}); }
+async function ctlApi(path,body){
+  const c=ctlCfg(); if(!c) throw Error('el control no está configurado');
+  const ctrl=new AbortController(); const to=setTimeout(()=>ctrl.abort(),180000);
+  try{
+    const r=await fetch(c.url+path,{method:body?'POST':'GET',signal:ctrl.signal,cache:'no-store',
+      headers:Object.assign({'Authorization':'Bearer '+c.token,'X-Quien':encodeURIComponent(ctlWho()||'sin nombre')},body?{'Content-Type':'application/json'}:{}),
+      body:body?JSON.stringify(body):undefined});
+    const j=await r.json().catch(()=>({})); if(!r.ok) throw Error(j.error||('error '+r.status)); return j;
+  }catch(e){ if(e.name==='AbortError') throw Error('La Bestia tardó demasiado'); if(e instanceof TypeError) throw Error('no se pudo conectar con La Bestia'); throw e; }
+  finally{ clearTimeout(to); }
+}
+async function ctlLoad(force){
+  if(!ctlCfg()) return;
+  ctlMsg(force?'Leyendo los equipos… (puede tardar unos segundos)':(CTL?'':'Conectando con La Bestia…'));
+  try{ CTL=await ctlApi('/api/estado'+(force?'?refrescar=1':'')); ctlRender(); ctlMsg(''); }
+  catch(e){ ctlMsg('No se pudo leer: '+e.message,1); }
+}
+function ctlRender(){
+  const S=CTL; if(!S) return;
+  document.getElementById('ctlSub').textContent=`Modo ${S.modo}${S.pausa?' · en pausa':''} · leído ${ctlFmt(S.ahora)}`;
+  const pb=document.getElementById('ctlPause'); pb.textContent=S.pausa?'Reanudar automático':'Pausar automático'; pb.className='btn ctl-btn'+(S.pausa?' go':'');
+  document.getElementById('ctlPaused').innerHTML=S.pausa?'<div class="ctl-paused">La automatización está en pausa: no prende ni apaga nada hasta que la reanudes.</div>':'';
+  const g={}; S.equipos.forEach(e=>(g[e.piso]=g[e.piso]||[]).push(e));
+  document.getElementById('ctlGrid').innerHTML=Object.keys(g).map(p=>{ const n=S.esta_noche&&S.esta_noche[p];
+    return `<div class="panel"><h3>${esc(CTL_PISO[p]||p)}${n?`<small>esta noche: ${esc(n)}</small>`:''}</h3>`+g[p].map(e=>{
+      const st=e.prendido===true?'on':e.prendido===false?'':'unk', txt=e.prendido===true?'Prendido':e.prendido===false?'Apagado':'Sin lectura';
+      const isCis=/cisterna/i.test(e.nombre), nm=e.nombre.replace(/\s*\(.*\)\s*$/,'');
+      const ctl=e.controlable?`<button class="btn ctl-btn ${e.prendido?'':'go'}" data-ck="${esc(e.clave)}" data-on="${e.prendido?0:1}">${e.prendido?'Apagar':'Prender'}</button>`
+        :`<div class="ctl-lock">${isCis?'Siempre apagada. Solo a mano si hay corte de agua':'No controlable'}</div>`;
+      const nota=/Sala/.test(e.nombre)?' · los 3 aires la siguen (frío 74°F / 86°F)':'';
+      return `<div class="ctl-row"><span class="ctl-dot ${st}"></span><div class="ctl-nm"><b>${esc(nm)}</b><small>${txt}${nota}${e.error?' · '+esc(e.error):''}</small></div>${ctl}</div>`;
+    }).join('')+'</div>'; }).join('');
+  document.getElementById('ctlPlan').innerHTML=(S.proximos||[]).map(x=>`<div><time>${ctlFmt(x.cuando)}</time><span>${esc(CTL_PISO[x.piso]||x.piso)}: <b>${x.accion==='prender'?'Prender':'Apagar'}</b> — ${esc(x.motivo)}</span></div>`).join('')||'<div>Nada programado en los próximos 21 días</div>';
+  document.querySelectorAll('#ctlGrid [data-ck]').forEach(b=>b.onclick=()=>ctlAct(b.dataset.ck,b.dataset.on==='1',b));
+}
+async function ctlAct(k,on,b){
+  if(CTL_BUSY) return; const e=CTL.equipos.find(x=>x.clave===k); const nm=e.nombre.replace(/\s*\(.*\)\s*$/,'');
+  if(!confirm(`¿${on?'Prender':'Apagar'} ${nm}?`+(/Sala/.test(e.nombre)?'\n\nLos 3 aires del 2do piso la siguen.':''))) return;
+  CTL_BUSY=true; b.disabled=true; ctlMsg(`${on?'Prendiendo':'Apagando'} ${nm}…`);
+  try{ await ctlApi('/api/accion',{clave:k,prender:on}); await ctlLoad(true); ctlMsg(`Listo: ${nm} ${on?'prendido':'apagado'}.`); }
+  catch(x){ ctlMsg('Error: '+x.message,1); b.disabled=false; }
+  CTL_BUSY=false;
+}
+function ctlWire(){
+  const on=!!ctlCfg(); document.getElementById('navCtl').hidden=!on; if(!on) return;
+  const w=document.getElementById('ctlWho'); w.value=ctlWho(); w.onchange=()=>{ try{ localStorage.setItem('prh_who',w.value); }catch(e){} };
+  document.getElementById('ctlRef').onclick=()=>ctlLoad(true);
+  document.getElementById('ctlPause').onclick=async()=>{ if(!CTL) return; const v=!CTL.pausa;
+    if(!confirm(v?'¿Pausar la automatización? No prenderá ni apagará nada hasta que la reanudes.':'¿Reanudar la automatización?')) return;
+    try{ await ctlApi('/api/pausa',{pausa:v}); await ctlLoad(false); }catch(x){ ctlMsg('Error: '+x.message,1); } };
+}
+
 function wire(){
   const go=v=>{ state.view=v; document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('on',x.dataset.v===v));
     document.querySelectorAll('.view').forEach(s=>s.classList.toggle('on',s.id==='v-'+v)); window.scrollTo(0,0); try{history.replaceState(null,'','#'+v)}catch(e){} };
-  document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{ if(b.dataset.v==='props'&&PROP_CUR) closeProp(); go(b.dataset.v); });
-  const h=location.hash.slice(1); const hp=h.split('/'); if(['home','props','cal','hist','sum','fin'].includes(hp[0])) go(hp[0]); if(hp[0]==='props'&&hp[1]&&BUNDLE.listings&&BUNDLE.listings[hp[1]]){ go('props'); openProp(hp[1],hp[2]==='vrbo'?'vrbo':'airbnb'); }
+  document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{ if(b.dataset.v==='props'&&PROP_CUR) closeProp(); go(b.dataset.v); if(b.dataset.v==='ctl') ctlLoad(false); });
+  ctlWire();
+  const h=location.hash.slice(1); const hp=h.split('/'); if(['home','props','cal','hist','sum','fin','ctl'].includes(hp[0])) go(hp[0]); if(hp[0]==='ctl') ctlLoad(false); if(hp[0]==='props'&&hp[1]&&BUNDLE.listings&&BUNDLE.listings[hp[1]]){ go('props'); openProp(hp[1],hp[2]==='vrbo'?'vrbo':'airbnb'); }
   document.getElementById('prev').onclick=()=>{ state.m--; if(state.m<0){state.m=11;state.y--;} renderCal(); };
   document.getElementById('next').onclick=()=>{ state.m++; if(state.m>11){state.m=0;state.y++;} renderCal(); };
   document.getElementById('today').onclick=()=>{ state.y=TODAY.getFullYear(); state.m=TODAY.getMonth(); renderCal(); };

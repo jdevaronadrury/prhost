@@ -1,5 +1,5 @@
 // PR Host – service worker: la app abre sin conexión con la última copia de datos.
-const V='prhost-v4';
+const V='prhost-v5';
 const SHELL=['./','index.html','manifest.webmanifest','logo.png','favicon.png','icon-192.png','icon-512.png','L/cuerpo.webp','L/balcon.webp','L/baranda.webp','L/pergola.webp'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(V).then(c=>c.addAll(SHELL)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==V).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
